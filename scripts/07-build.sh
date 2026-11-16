@@ -11,7 +11,7 @@ RAM=$(free -g | awk '/Mem:/{print $2}')
 log "=== Build crDroid for $DEVICE: $(nproc) threads, $RAM GB RAM, $JOBS jobs ==="
 if [ "$RAM" -lt "$MIN_RAM_GB" ]; then
   warn "only $RAM GB RAM (MIN_RAM_GB=$MIN_RAM_GB). The build may fail with out-of-memory errors."
-  if [ -t 0 ]; then read -rp "Build anyway? (y/N) " a; [ "${a,,}" = y ] || exit 1; fi
+  if [ -t 0 ] && [ -z "${CCB_UNATTENDED:-}" ]; then read -rp "Build anyway? (y/N) " a; [ "${a,,}" = y ] || exit 1; fi
 fi
 [ -f "$KNOWN_GOOD_MARK" ] && log "source tree is pinned to known-good state $(cat "$KNOWN_GOOD_MARK")"
 

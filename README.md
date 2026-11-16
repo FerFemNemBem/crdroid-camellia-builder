@@ -64,6 +64,20 @@ Details: [docs/requirements.md](docs/requirements.md)
 
 ## Quick start
 
+After the one-time setup ([docs/setup.md](docs/setup.md): WSL or Ubuntu, `scripts/01-setup-host.sh`,
+optionally `config.env`) **one command does everything**:
+
+```bash
+bash scripts/build-all.sh        # Windows: double-click scripts\windows\build-all.bat
+```
+
+It asks its questions at the start (key backup passphrase), then runs checks, downloads, sync, keys,
+preparation and build unattended for several hours inside tmux, with a status bar showing the
+current step, elapsed time and disk usage. Close the window any time - it keeps running; start it
+again to see it or to resume after an interruption.
+
+The same, step by step:
+
 ```bash
 git clone https://github.com/FerFemNemBem/crdroid-camellia-builder.git
 cd crdroid-camellia-builder

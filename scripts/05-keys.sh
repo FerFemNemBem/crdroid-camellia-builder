@@ -79,12 +79,19 @@ log "keys installed into $DEST"
 if [ $BACKUP = 1 ]; then
   mkdir -p "$KEY_BACKUP_DIR"
   F=$KEY_BACKUP_DIR/android-keys-$(date +%Y%m%d-%H%M).tar.gz.gpg
-  echo
-  echo ">>> Choose a PASSPHRASE for the encrypted backup (asked twice)."
-  echo ">>> Without it the backup is useless - store it in a password manager!"
-  tar -C "$WORK_DIR" -czf - "$(basename "$KEYS_DIR")" | gpg --symmetric --cipher-algo AES256 --pinentry-mode loopback -o "$F"
-  echo ">>> Checking the backup (enter the passphrase once more):"
-  N=$(gpg --pinentry-mode loopback -d "$F" 2>/dev/null | tar -tzf - | grep -c '\.pk8$' || true)
+  if [ -n "${CCB_BACKUP_PASSPHRASE:-}" ]; then
+    # passphrase given by build-all.sh (asked at the start)
+    GPG=(gpg --batch --yes --pinentry-mode loopback --passphrase-fd 3)
+    tar -C "$WORK_DIR" -czf - "$(basename "$KEYS_DIR")" | "${GPG[@]}" --symmetric --cipher-algo AES256 -o "$F" 3<<<"$CCB_BACKUP_PASSPHRASE"
+    N=$("${GPG[@]}" -d "$F" 3<<<"$CCB_BACKUP_PASSPHRASE" 2>/dev/null | tar -tzf - | grep -c '\.pk8$' || true)
+  else
+    echo
+    echo ">>> Choose a PASSPHRASE for the encrypted backup (asked twice)."
+    echo ">>> Without it the backup is useless - store it in a password manager!"
+    tar -C "$WORK_DIR" -czf - "$(basename "$KEYS_DIR")" | gpg --symmetric --cipher-algo AES256 --pinentry-mode loopback -o "$F"
+    echo ">>> Checking the backup (enter the passphrase once more):"
+    N=$(gpg --pinentry-mode loopback -d "$F" 2>/dev/null | tar -tzf - | grep -c '\.pk8$' || true)
+  fi
   [ "$N" -ge 10 ] && log "backup OK: $F ($N private keys)" || die "backup check failed ($F)"
   echo ">>> Copy $(basename "$F") to a second place (USB stick, cloud) as well."
 fi

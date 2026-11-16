@@ -3,6 +3,26 @@
 All commands run in the repository folder, in Ubuntu or in the WSL distribution.
 Logs of every step are written to `$OUTPUT_DIR/logs/`.
 
+## The easy way: everything at once
+
+```bash
+bash scripts/build-all.sh          # Windows: double-click scripts\windows\build-all.bat
+```
+
+- asks everything at the start: a name for your key certificate (unless `KEY_SUBJECT` is set) and a
+  passphrase for the encrypted key backup
+- then runs steps 1-5 below (plus publishing if an OTA server is configured) without further questions
+- runs inside **tmux** (session `crdroid-build`); the blue bar at the bottom shows
+  `step 3/6: sync | step 0:12:34 | total 1:02:06 | disk +37 GB` and a spinner, updated every 5 seconds;
+  above it you see the detailed output of the current step (download progress, build percentage
+  and remaining time)
+- close the window whenever you like - the build continues. `bash scripts/build-all.sh` (or the
+  .bat) shows it again
+- if a step fails it stops with the name of the log; fix the cause and start it again - finished
+  long steps (sync, build) are skipped. `--restart` starts from scratch.
+
+The sections below describe what each step does and how to run them one by one.
+
 The long steps (sync, build) are best run inside **tmux**, so they keep running if the terminal
 window closes:
 
