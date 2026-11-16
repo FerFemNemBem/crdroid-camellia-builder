@@ -112,6 +112,19 @@ On Windows, start with [docs/setup.md](docs/setup.md) (creating the WSL distribu
 | [how-it-works.md](docs/how-it-works.md) | what the manifest and every patch do and why |
 | [troubleshooting.md](docs/troubleshooting.md) | known problems and their solutions |
 
+## Working on it with Claude
+
+The repository contains notes for the AI assistant Claude, so you can continue where this project
+left off - debugging a failed build, adapting a patch after an upstream change, analysing a phone
+log or preparing a new release:
+
+- [`CLAUDE.md`](CLAUDE.md) - project overview and hard rules (Claude Code reads it automatically)
+- [`.claude/skills/crdroid-camellia-builder/SKILL.md`](.claude/skills/crdroid-camellia-builder/SKILL.md) -
+  the known pitfalls with their fixes and step-by-step procedures for maintenance
+
+Open the repository with [Claude Code](https://claude.com/claude-code) and describe your problem.
+Without Claude these files are still a readable summary of everything learned while building this.
+
 ## Configuration
 
 Everything that differs between computers lives in `config.env` (copy of

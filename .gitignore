@@ -1,6 +1,7 @@
 # personal settings - never commit
 config.env
 .private-patterns
+.claude/settings.local.json
 
 # signing keys - never commit
 keys/
