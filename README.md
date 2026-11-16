@@ -76,7 +76,8 @@ preparation and build unattended for several hours inside tmux, with a status ba
 current step, elapsed time and disk usage. Close the window any time - it keeps running; start it
 again to see it or to resume after an interruption.
 
-The same, step by step:
+**Alternatively, step by step** - if you prefer to run each step yourself instead of `build-all.sh`
+(details in [docs/build.md](docs/build.md)):
 
 ```bash
 git clone https://github.com/FerFemNemBem/crdroid-camellia-builder.git

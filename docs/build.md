@@ -21,7 +21,11 @@ bash scripts/build-all.sh          # Windows: double-click scripts\windows\build
 - if a step fails it stops with the name of the log; fix the cause and start it again - finished
   long steps (sync, build) are skipped. `--restart` starts from scratch.
 
-The sections below describe what each step does and how to run them one by one.
+## The alternative: step by step
+
+**Not needed if you used `build-all.sh`.** If you prefer to run and watch each step yourself, or
+want to repeat a single step, run the scripts below one after another. `build-all.sh` does exactly
+the same; the descriptions also explain what happens during the easy way.
 
 The long steps (sync, build) are best run inside **tmux**, so they keep running if the terminal
 window closes:
