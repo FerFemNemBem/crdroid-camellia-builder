@@ -2,7 +2,8 @@
 
 crDroid 12 is based on LineageOS 23.2 (Android 16). Neither knows the camellia hardware;
 that comes from the **device tree**, **kernel** and **kernel modules** maintained by
-[cristidclxvi](https://github.com/cristidclxvi). Android 16 officially needs a newer kernel than
+[cristidclxvi](https://github.com/cristidclxvi), who ported the original camellia device tree of
+[dm700-devs](https://github.com/dm700-devs/device_xiaomi_camellia) to Android 16. Android 16 officially needs a newer kernel than
 camellia's 4.14 - the device tree therefore ships patches that adapt parts of Android to the old
 kernel. This builder adds the parts needed to build all of that as crDroid.
 
@@ -28,10 +29,12 @@ Applied by `scripts/06-prepare.sh`, idempotently (already applied ones are detec
 | patch | what |
 |---|---|
 | `0001-camellia-disable-ViLTE-...` | by fieldmar (pull request #7): disables ViLTE so that the modem brings up IMS - fixes VoLTE |
-| `0002-camellia-ship-the-gold-connectivity-firmware` | by fieldmar (pull request #8): switches the Bluetooth/Wi-Fi firmware list to the "gold" set (also used by crDroid 14 for camellia); fixes dropping A2DP connections and a silent Bluetooth microphone |
+| `0002-camellia-ship-the-gold-connectivity-firmware` | by fieldmar (pull request #8): restores the "gold" Bluetooth/Wi-Fi firmware set (chosen by Sushrut1101 of dm700-devs in 2023 and shipped by crDroid 14, lost in the move to Android 16); fixes music dropping after a pause and the silent headset microphone |
 | `0003-camellia-include-ViPER4AndroidFX` | builds ViPER, registers its audio effect, SELinux `execmem` for the audio HAL; skipped with `WITH_VIPER=false` |
 
 The pull requests are included as files so the build does not depend on them staying open on GitHub.
+fieldmar's own branch (`camellian-23.2`) additionally carries a few stock modem files; they are not
+part of this builder, which has only been tested without a SIM card.
 
 ### Required patches from the device tree
 

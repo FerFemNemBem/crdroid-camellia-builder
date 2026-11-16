@@ -10,10 +10,17 @@ are downloaded from their original sources while you build.
 This project was created with Claude (Anthropic) as an AI assistant.
 
 Credits - this build would not exist without:
-  * cristidclxvi  - Android 16 device tree, kernel and kernel modules for camellia
+  * dm700-devs    - the original camellia device tree everything is based on (power HAL,
+                    sepolicy, init files, overlays, build scaffolding)
+                    https://github.com/dm700-devs/device_xiaomi_camellia
+  * cristidclxvi  - Android 16 port: the patches that let Android 16 run on the 4.14 kernel,
+                    one build for all models, hardware fixes, kernel and kernel modules
                     https://github.com/cristidclxvi
-  * fieldmar      - ViLTE/VoLTE fix and "gold" connectivity firmware
+  * Sushrut1101   - (dm700-devs) chose the "gold" connectivity firmware in 2023
+  * fieldmar      - ViLTE/VoLTE fix and restoring the "gold" connectivity firmware, which also
+                    fixes the Bluetooth headset microphone
                     (patches/device/0001-*, 0002-*, originally pull requests #7 and #8)
+                    https://github.com/fieldmar/android_device_xiaomi_camellia
   * crDroid       - https://github.com/crdroidandroid
   * LineageOS     - https://github.com/LineageOS
   * TogoFire      - ViPER4AndroidFX integration

@@ -106,9 +106,13 @@ GApps switches, signing mode, OTA server. Without a `config.env` sensible defaul
 ## Credits
 
 This builder only glues together the work of others:
-**cristidclxvi** (Android 16 device tree, kernel and modules for camellia), **fieldmar** (VoLTE fix
-and connectivity firmware), **crDroid**, **LineageOS**, **TogoFire** (ViPER4AndroidFX) and
+**dm700-devs** (the original camellia device tree), **cristidclxvi** (Android 16 port, kernel and
+modules), **Sushrut1101** (choice of the "gold" connectivity firmware), **fieldmar** (VoLTE fix and
+restoring that firmware), **crDroid**, **LineageOS**, **TogoFire** (ViPER4AndroidFX) and
 **MindTheGapps**. See [NOTICE](NOTICE).
+
+If you only want a ready LineageOS build with these fixes rather than building crDroid yourself,
+look at fieldmar's releases: <https://github.com/fieldmar/android_device_xiaomi_camellia/releases>.
 
 ## License
 
