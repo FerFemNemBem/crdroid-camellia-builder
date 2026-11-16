@@ -24,6 +24,7 @@ This project stands on the shoulders of others - without their work it would not
 - **Sushrut1101** (dm700-devs) - chose the "gold" connectivity firmware back in 2023
 - **[fieldmar](https://github.com/fieldmar/android_device_xiaomi_camellia)** - the VoLTE fix and
   restoring the gold firmware, which also fixes the Bluetooth headset microphone
+- **MiCode** (Xiaomi) - the camellia kernel source drop
 - **[crDroid](https://github.com/crdroidandroid)** and **[LineageOS](https://github.com/LineageOS)** -
   the ROM itself
 - **[TogoFire](https://github.com/TogoFire/packages_apps_ViPER4AndroidFX)** - ViPER4AndroidFX

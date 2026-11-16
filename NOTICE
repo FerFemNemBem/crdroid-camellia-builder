@@ -21,6 +21,7 @@ Credits - this build would not exist without:
                     fixes the Bluetooth headset microphone
                     (patches/device/0001-*, 0002-*, originally pull requests #7 and #8)
                     https://github.com/fieldmar/android_device_xiaomi_camellia
+  * MiCode        - (Xiaomi) the camellia kernel source drop
   * crDroid       - https://github.com/crdroidandroid
   * LineageOS     - https://github.com/LineageOS
   * TogoFire      - ViPER4AndroidFX integration

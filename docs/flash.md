@@ -94,7 +94,8 @@ Unplug and replug the phone after installing the udev rules.
    ```
 
    The PC may stop at **47 %** and report an error or success - both are normal; the phone shows
-   whether the installation finished.
+   whether the installation finished. A warning that the package "will downgrade your system" can
+   be accepted: recovery compares against a build date it does not know.
 4. Optional, Google apps: **Advanced -> Reboot to recovery** (important: the system was installed
    to the other slot), then **Apply update -> Apply from ADB** and
 
@@ -112,6 +113,9 @@ Unplug and replug the phone after installing the udev rules.
 - without: same as above, but **without Format data**: boot into recovery
   (`adb reboot recovery`), *Apply update -> Apply from ADB*, sideload the new ZIP, reboot.
   This only works for builds signed with the **same keys**.
+  **If you use GApps, sideload MindTheGapps again in the same recovery session, before rebooting**:
+  an update replaces the whole system and the Google apps live there, not in your data. If you
+  rebooted first and the Play Store crashes, go back to recovery and sideload them - no format needed.
 
 Switching from another ROM (or from builds with other keys) always requires Format data.
 
