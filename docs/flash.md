@@ -4,24 +4,76 @@
 > The first installation **erases everything on the phone** (Format data). Back up your data.
 > Never re-lock the bootloader (see [requirements.md](requirements.md)).
 
+## platform-tools: adb and fastboot
+
+Flashing is done from your PC over USB with two small programs from Google, the **platform-tools**:
+
+| tool | talks to the phone when it is ... | used for |
+|---|---|---|
+| `adb` | running Android (USB debugging on) or in the recovery | rebooting into bootloader/recovery, *sideloading* the ROM ZIP, reading logs |
+| `fastboot` | in fastboot mode (*Volume down + Power*) | flashing `boot.img`, switching A/B slots |
+
+Always use the **current official version** - old versions (e.g. from Linux package managers or
+random download sites) often fail with sideloading or with A/B devices.
+
+### Windows
+
+1. Download *SDK Platform-Tools for Windows* from Google:
+   <https://developer.android.com/tools/releases/platform-tools>
+2. Unpack the ZIP, for example to `C:\platform-tools` (the folder then contains `adb.exe` and `fastboot.exe`).
+3. Make the tools available in a PowerShell window (only for this window):
+   ```powershell
+   $env:Path = "C:\platform-tools;$env:Path"
+   adb version
+   fastboot --version
+   ```
+   To make it permanent, add `C:\platform-tools` to *Path* in *System -> About -> Advanced system
+   settings -> Environment variables*.
+4. Drivers: `adb` usually works without extra drivers on Windows 10/11. If `fastboot devices` shows
+   nothing while the phone is in fastboot mode, open the *Device Manager*, find the unknown
+   "Android" device and install the **Google USB Driver**
+   (<https://developer.android.com/studio/run/win-usb>) for it ("Android Bootloader Interface").
+
+> [!NOTE]
+> **Using WSL?** Flash from **Windows**, not from inside WSL - WSL cannot see USB devices without
+> extra tools. That is why it is convenient to set `OUTPUT_DIR` to a Windows drive (e.g.
+> `/mnt/d/crdroid` = `D:\crdroid`): the finished builds are then directly reachable from PowerShell.
+> Otherwise they are under `\\wsl.localhost\<distribution>\home\<user>\crdroid-out\builds`.
+
+### Linux
+
+```bash
+cd ~ && curl -fLO https://dl.google.com/android/repository/platform-tools-latest-linux.zip
+unzip -o platform-tools-latest-linux.zip            # creates ~/platform-tools
+echo 'export PATH="$HOME/platform-tools:$PATH"' >> ~/.bashrc && . ~/.bashrc
+sudo apt-get install -y android-sdk-platform-tools-common   # udev rules: USB access without root
+adb version
+```
+
+Unplug and replug the phone after installing the udev rules.
+
+### Test the connection
+
+1. On the phone enable the developer options: *Settings -> About phone*, tap **MIUI version** (or
+   *Build number* on a custom ROM) seven times.
+2. In *Settings -> Additional settings -> Developer options* (custom ROM: *System -> Developer
+   options*) enable **USB debugging**.
+3. Connect the phone with a USB cable that supports data, then on the PC:
+   ```
+   adb devices
+   ```
+   Confirm the prompt on the phone ("Allow USB debugging?"). The device must be listed as `device`
+   (not `unauthorized`).
+
 ## Before you start
 
 - bootloader unlocked, MIUI 14 firmware on the phone ([requirements.md](requirements.md))
-- platform-tools (adb, fastboot) on your PC
+- platform-tools installed and `adb devices` shows the phone (see above)
 - if the phone is signed into a Google account: **remove the account** in the phone's settings first,
   otherwise the factory reset protection may ask for it after formatting
 - battery charged to at least 50 %
-
-On Windows, open PowerShell in the build folder (e.g. `D:\crdroid\builds\20261116-1200`) and make the
-platform-tools available for this window:
-
-```powershell
-$env:Path = "C:\path\to\platform-tools;$env:Path"
-adb devices
-```
-
-(USB debugging must be enabled in the developer options of the current system and the PC confirmed
-on the phone.)
+- open the terminal / PowerShell **in the build folder** (e.g. `D:\crdroid\builds\20261116-1200`),
+  so the file names below work as they are
 
 ## First installation
 

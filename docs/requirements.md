@@ -65,9 +65,9 @@ groups).
 Installing the ROM the first time requires **Format data**: everything on the phone, including
 photos and internal storage, is erased. Back up what you need first.
 
-## Accounts and tools on the PC
+## Tools on the PC
 
-- for Windows: platform-tools (adb/fastboot) from Google
-  (<https://developer.android.com/tools/releases/platform-tools>) and the Xiaomi USB driver if
-  fastboot does not see the phone
-- no account is needed for building; GitHub is only used anonymously
+- **platform-tools** (adb and fastboot) from Google to flash the phone - what they are and how to
+  install them: [flash.md](flash.md#platform-tools-adb-and-fastboot)
+- everything needed for building is installed by `scripts/01-setup-host.sh`
+- no account is needed; GitHub is only used anonymously
