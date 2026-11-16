@@ -23,7 +23,7 @@ Only static files are served; there is no server-side software.
 OTA_URL="https://ota.example.org/crdroid/{device}.json"   # must end with /{device}.json
 OTA_UPLOAD="ota-server:crdroid"     # rsync target of the folder that contains camellia.json
 OTA_KEEP=3
-MAINTAINER="your nickname"
+MAINTAINER=""                       # shown in the updater as "by ..."; empty = no name
 ```
 
 `06-prepare.sh` writes the URL into the updater (only then - with an empty `OTA_URL` the stock
