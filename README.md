@@ -13,6 +13,27 @@ step by step, signed with your own keys, optionally with updates from your own O
 > See [What has been tested](#what-has-been-tested). There is **no support** - please do not expect
 > answers to questions or issues. Discussions among users are welcome.
 
+## Credits
+
+This project stands on the shoulders of others - without their work it would not exist:
+
+- **[dm700-devs](https://github.com/dm700-devs/device_xiaomi_camellia)** - the original camellia
+  device tree everything is based on (power HAL, SELinux policy, init files, overlays, build scaffolding)
+- **[cristidclxvi](https://github.com/cristidclxvi)** - the Android 16 port: the patches that let
+  Android 16 run on the 4.14 kernel, one build for all models, hardware fixes, kernel and kernel modules
+- **Sushrut1101** (dm700-devs) - chose the "gold" connectivity firmware back in 2023
+- **[fieldmar](https://github.com/fieldmar/android_device_xiaomi_camellia)** - the VoLTE fix and
+  restoring the gold firmware, which also fixes the Bluetooth headset microphone
+- **[crDroid](https://github.com/crdroidandroid)** and **[LineageOS](https://github.com/LineageOS)** -
+  the ROM itself
+- **[TogoFire](https://github.com/TogoFire/packages_apps_ViPER4AndroidFX)** - ViPER4AndroidFX
+  integration, **[MindTheGapps](https://github.com/MindTheGapps)** - the optional Google apps
+
+Details in [NOTICE](NOTICE).
+
+If you only want a ready LineageOS build with these fixes rather than building crDroid yourself,
+look at fieldmar's releases: <https://github.com/fieldmar/android_device_xiaomi_camellia/releases>.
+
 > [!NOTE]
 > This project was created together with **Claude**, an AI assistant by Anthropic - from finding the
 > required fixes to writing the scripts and this documentation. Commits carry a `Co-Authored-By: Claude` line.
@@ -130,17 +151,6 @@ Without Claude these files are still a readable summary of everything learned wh
 Everything that differs between computers lives in `config.env` (copy of
 [config.env.example](config.env.example), ignored by git): directories, number of jobs, ViPER and
 GApps switches, signing mode, OTA server. Without a `config.env` sensible defaults are used.
-
-## Credits
-
-This builder only glues together the work of others:
-**dm700-devs** (the original camellia device tree), **cristidclxvi** (Android 16 port, kernel and
-modules), **Sushrut1101** (choice of the "gold" connectivity firmware), **fieldmar** (VoLTE fix and
-restoring that firmware), **crDroid**, **LineageOS**, **TogoFire** (ViPER4AndroidFX) and
-**MindTheGapps**. See [NOTICE](NOTICE).
-
-If you only want a ready LineageOS build with these fixes rather than building crDroid yourself,
-look at fieldmar's releases: <https://github.com/fieldmar/android_device_xiaomi_camellia/releases>.
 
 ## License
 
