@@ -1,0 +1,26 @@
+crdroid-camellia-builder
+Copyright 2026 FerFemNemBem
+
+Licensed under the Apache License, Version 2.0 (see LICENSE).
+
+This project contains build scripts, a local manifest and patches only. It does not contain
+crDroid, LineageOS or Android source code, proprietary vendor files or ROM images; all of these
+are downloaded from their original sources while you build.
+
+This project was created with Claude (Anthropic) as an AI assistant.
+
+Credits - this build would not exist without:
+  * cristidclxvi  - Android 16 device tree, kernel and kernel modules for camellia
+                    https://github.com/cristidclxvi
+  * fieldmar      - ViLTE/VoLTE fix and "gold" connectivity firmware
+                    (patches/device/0001-*, 0002-*, originally pull requests #7 and #8)
+  * crDroid       - https://github.com/crdroidandroid
+  * LineageOS     - https://github.com/LineageOS
+  * TogoFire      - ViPER4AndroidFX integration
+                    https://github.com/TogoFire/packages_apps_ViPER4AndroidFX
+  * MindTheGapps  - optional Google apps package
+                    https://github.com/MindTheGapps
+
+patches/device/0001-* and 0002-* are authored by fieldmar; the other patches in this
+repository are derived from the device tree, LineageOS or AOSP and are provided under
+the license of the project they apply to (Apache License 2.0).

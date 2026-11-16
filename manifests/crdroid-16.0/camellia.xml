@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Local manifest for crDroid 12 (branch 16.0, based on LineageOS 23.2) on camellia.
+     Copied to .repo/local_manifests/ by scripts/04-sync.sh and scripts/update.sh. -->
+<manifest>
+  <!-- Device tree, kernel and kernel modules (cristidclxvi) -->
+  <project name="cristidclxvi/android_device_xiaomi_camellia"
+           path="device/xiaomi/camellia" remote="github" revision="lineage-23.2" />
+  <project name="cristidclxvi/android_kernel_xiaomi_camellia"
+           path="kernel/xiaomi/camellia" remote="github" revision="lineage-23.2" />
+  <project name="cristidclxvi/android_kernel_modules_xiaomi_camellia"
+           path="kernel/xiaomi/vendor" remote="github" revision="lineage-23.2" />
+
+  <!-- Common MediaTek / Xiaomi parts from LineageOS -->
+  <project name="LineageOS/android_device_mediatek_sepolicy_vndr"
+           path="device/mediatek/sepolicy_vndr" remote="github" />
+  <project name="LineageOS/android_hardware_mediatek"
+           path="hardware/mediatek" remote="github" />
+  <project name="LineageOS/android_hardware_xiaomi"
+           path="hardware/xiaomi" remote="github" />
+
+  <!-- MediaTek IMS (VoLTE), pinned on purpose -->
+  <project name="cristidclxvi/android_vendor_mediatek_ims"
+           path="vendor/mediatek/ims" remote="github"
+           revision="32a265afc6a297b20e8c8a4c870133de0e188884" />
+
+  <!-- Kernel toolchain clang r383902 (only available on AOSP android-12 branches) -->
+  <project name="platform/prebuilts/clang/host/linux-x86"
+           path="prebuilts/clang/host/linux-x86-r383902"
+           remote="aosp" revision="refs/tags/android-12.1.0_r27"
+           clone-depth="1" />
+
+  <!-- crDroid 16.0 still uses the plain AOSP versions of these projects, while LineageOS 23.2
+       carries its own forks (including security fixes). Without the CellBroadcastService fork the
+       build fails (missing CellBroadcastMetrics constants). State: 2026-11-14.
+       Removed by path with optional="true", so this keeps working once crDroid forks them itself.
+       scripts/update.sh reports when crDroid no longer uses the AOSP version of one of them. -->
+  <remove-project path="packages/modules/CellBroadcastService" optional="true" />
+  <project path="packages/modules/CellBroadcastService" name="LineageOS/android_packages_modules_CellBroadcastService" groups="pdk" remote="github" revision="lineage-23.2" />
+  <remove-project path="packages/modules/Telephony" optional="true" />
+  <project path="packages/modules/Telephony" name="LineageOS/android_packages_modules_Telephony" groups="pdk-cw-fs,pdk-fs" remote="github" revision="lineage-23.2" />
+  <remove-project path="packages/services/Iwlan" optional="true" />
+  <project path="packages/services/Iwlan" name="LineageOS/android_packages_services_Iwlan" groups="pdk-cw-fs,pdk-fs" remote="github" revision="lineage-23.2" />
+  <remove-project path="packages/modules/NeuralNetworks" optional="true" />
+  <project path="packages/modules/NeuralNetworks" name="LineageOS/android_packages_modules_NeuralNetworks" groups="pdk-cw-fs,pdk-fs" remote="github" revision="lineage-23.2" />
+  <remove-project path="system/keymint" optional="true" />
+  <project path="system/keymint" name="LineageOS/android_system_keymint" groups="pdk" remote="github" revision="lineage-23.2" />
+  <remove-project path="external/aac" optional="true" />
+  <project path="external/aac" name="LineageOS/android_external_aac" groups="pdk" remote="github" revision="lineage-23.2" />
+  <remove-project path="external/tremolo" optional="true" />
+  <project path="external/tremolo" name="LineageOS/android_external_tremolo" groups="pdk" remote="github" revision="lineage-23.2" />
+  <remove-project path="external/hplip" optional="true" />
+  <project path="external/hplip" name="LineageOS/android_external_hplip" groups="pdk" remote="github" revision="lineage-23.2" />
+  <remove-project path="hardware/broadcom/wlan" optional="true" />
+  <project path="hardware/broadcom/wlan" name="LineageOS/android_hardware_broadcom_wlan" groups="pdk,broadcom_wlan" remote="github" revision="lineage-23.2" />
+
+  <!-- ViPER4AndroidFX (audio effects). Included by patches/device/0003-*, can be disabled
+       with WITH_VIPER=false in config.env (the project is then synced but not built). -->
+  <project name="TogoFire/packages_apps_ViPER4AndroidFX"
+           path="packages/apps/ViPER4AndroidFX" remote="github" revision="v4a" />
+</manifest>

@@ -1,0 +1,36 @@
+From 626cd4e0ce575987dcbcebd27c6a9f1939cbdc3d Mon Sep 17 00:00:00 2001
+From: Fieldmar <974888+fieldmar@users.noreply.github.com>
+Date: Tue, 20 Oct 2026 22:03:35 +0100
+Subject: [PATCH] camellia: disable ViLTE so the modem brings up IMS
+
+With video calling (ViLTE) enabled for a SIM, the RIL sends
+AT+EIMSCFG=1,1,... and the modem never requests the IMS PDN
+(+EIMSPDN "notify" never arrives), so VoLTE never registers.
+With ViLTE off it sends AT+EIMSCFG=1,0,... as stock MIUI does, and
+IMS registers on EE and Three; VoLTE calls work both ways.
+
+The Settings "Video calling" switch defaults to on and does not
+reliably save off, so turn ViLTE support off for the device.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Change-Id: I56862a3f588c234ae06fd30801b68439cf22693b
+---
+ vendor.prop | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/vendor.prop b/vendor.prop
+index 98be728..447ae1c 100644
+--- a/vendor.prop
++++ b/vendor.prop
+@@ -215,7 +215,7 @@ persist.vendor.mtk.volte.enable=1
+ persist.vendor.mtk_ct_volte_support=3
+ persist.vendor.mtk_dynamic_ims_switch=1
+ persist.vendor.mtk_wfc_support=1
+-persist.vendor.vilte_support=1
++persist.vendor.vilte_support=0
+ persist.vendor.viwifi_support=1
+ persist.vendor.volte_support=1
+ persist.vendor.vonr_setting_support=1
+-- 
+2.43.0
+

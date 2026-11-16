@@ -1,0 +1,115 @@
+# crdroid-camellia-builder
+
+Build **crDroid 12 (Android 16)** yourself for the **Redmi Note 10 5G / POCO M3 Pro 5G**
+(codename `camellia` / `camellian`, MediaTek Dimensity 700) - on Ubuntu 24.04 or Windows with WSL2,
+step by step, signed with your own keys, optionally with updates from your own OTA server.
+
+> [!WARNING]
+> **No warranty. Use at your own risk.**
+> Flashing a custom ROM can erase all your data and, if something goes wrong, can leave your phone
+> unable to boot. You alone are responsible for your device.
+>
+> This project has only been tested **rudimentarily, on a single phone (M2103K19G) without a SIM card**.
+> See [What has been tested](#what-has-been-tested). There is **no support** - please do not expect
+> answers to questions or issues. Discussions among users are welcome.
+
+> [!NOTE]
+> This project was created together with **Claude**, an AI assistant by Anthropic - from finding the
+> required fixes to writing the scripts and this documentation. Commits carry a `Co-Authored-By: Claude` line.
+
+## What you get
+
+- crDroid 12.x (Android 16, based on LineageOS 23.2), built from source on your own computer
+- signed with **your own release keys** (not the public test keys)
+- optional: **ViPER4AndroidFX** audio effects (on by default)
+- optional: OTA updates from **your own web server** through the built-in crDroid updater
+- one command (or one double-click on Windows) to check for upstream changes and rebuild
+
+What you do **not** get: a ready-made ROM. This repository only contains scripts, a manifest and
+patches. All source code, the proprietary vendor files and the optional Google apps are downloaded
+from their original sources while you build.
+
+## What has been tested
+
+On one Redmi Note 10 5G Global (M2103K19G), used **without a SIM card**, WLAN only:
+
+| Works | Not tested |
+|---|---|
+| WLAN, Bluetooth audio (pairing, music, pause/resume) | phone calls, SMS, mobile data, VoLTE, dual SIM |
+| audio, video and streaming apps | camera (beyond a quick look), NFC, GPS |
+| display, fingerprint sensor | other models / variants (see [requirements](docs/requirements.md)) |
+| ViPER4AndroidFX, OTA updates from an own server | long-term battery life |
+
+## Requirements in short
+
+- a PC with **8+ CPU threads (16 recommended), 32+ GB RAM (64 recommended), ~400 GB free SSD space**
+- **Ubuntu 24.04** (native) or **Windows 10/11 with WSL2**
+- a phone with an **unlocked bootloader** and **MIUI 14 firmware**
+- patience: the first download takes 1-3 hours, the first build 2-4 hours
+
+**For reference, the author's numbers** (one PC: 16 threads, 62 GB RAM of which 50 GB for WSL2,
+SATA SSD, a 250-400 Mbit/s download rate during the sync):
+
+| | time | disk space |
+|---|---|---|
+| first download of the sources | 45-75 min | 125-150 GB |
+| first build, empty compiler cache | **4 h 14 min** | |
+| everything after the first build (sources, build output, cache) | | **about 280 GB** |
+| later builds (cache warm, few changes) | 7-15 min | +1.3 GB per finished build |
+
+So: plan for **350-400 GB of free disk space, a fast internet connection and a fast computer**.
+With less RAM, fewer threads or a hard disk, everything takes considerably longer.
+
+Details: [docs/requirements.md](docs/requirements.md)
+
+## Quick start
+
+```bash
+git clone https://github.com/FerFemNemBem/crdroid-camellia-builder.git
+cd crdroid-camellia-builder
+cp config.env.example config.env     # optional: adjust paths and options
+bash scripts/01-setup-host.sh        # packages, repo tool, ccache   (once)
+bash scripts/02-check-host.sh        # is this computer ready?
+bash scripts/03-download.sh          # stock ROM for the vendor files (+ GApps if enabled)
+tmux new -s build                    # recommended for the long steps
+bash scripts/04-sync.sh              # source code, ~150 GB         (1-3 h)
+bash scripts/05-keys.sh              # your own signing keys        (once!)
+bash scripts/06-prepare.sh           # patches, firmware, vendor files
+bash scripts/07-build.sh             # build                        (2-4 h the first time)
+```
+
+Then flash it: [docs/flash.md](docs/flash.md). Later updates: `bash scripts/update.sh` -
+see [docs/updates.md](docs/updates.md).
+
+On Windows, start with [docs/setup.md](docs/setup.md) (creating the WSL distribution).
+
+## Documentation
+
+| | |
+|---|---|
+| [requirements.md](docs/requirements.md) | hardware, phone models, firmware, bootloader |
+| [setup.md](docs/setup.md) | preparing Ubuntu or WSL2 |
+| [build.md](docs/build.md) | the build, step by step |
+| [flash.md](docs/flash.md) | installing the ROM, GApps, rescue |
+| [updates.md](docs/updates.md) | staying up to date, known-good states |
+| [signing.md](docs/signing.md) | own keys vs. test keys, backups |
+| [ota-server.md](docs/ota-server.md) | optional: updates from your own server |
+| [how-it-works.md](docs/how-it-works.md) | what the manifest and every patch do and why |
+| [troubleshooting.md](docs/troubleshooting.md) | known problems and their solutions |
+
+## Configuration
+
+Everything that differs between computers lives in `config.env` (copy of
+[config.env.example](config.env.example), ignored by git): directories, number of jobs, ViPER and
+GApps switches, signing mode, OTA server. Without a `config.env` sensible defaults are used.
+
+## Credits
+
+This builder only glues together the work of others:
+**cristidclxvi** (Android 16 device tree, kernel and modules for camellia), **fieldmar** (VoLTE fix
+and connectivity firmware), **crDroid**, **LineageOS**, **TogoFire** (ViPER4AndroidFX) and
+**MindTheGapps**. See [NOTICE](NOTICE).
+
+## License
+
+[Apache License 2.0](LICENSE). This project is not affiliated with crDroid, LineageOS or Xiaomi.

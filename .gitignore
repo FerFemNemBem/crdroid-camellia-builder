@@ -1,0 +1,16 @@
+# personal settings - never commit
+config.env
+.private-patterns
+
+# signing keys - never commit
+keys/
+*.pk8
+*.x509.pem
+*.key
+
+# build results, downloads, logs
+*.zip
+*.img
+*.tgz
+*.log
+out/

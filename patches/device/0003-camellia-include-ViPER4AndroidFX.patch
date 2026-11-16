@@ -1,0 +1,64 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: FerFemNemBem <74377239+FerFemNemBem@users.noreply.github.com>
+Date: Sun, 15 Nov 2026 07:44:57 +0000
+Subject: [PATCH] camellia: include ViPER4AndroidFX
+
+- inherit config.mk from packages/apps/ViPER4AndroidFX (TogoFire, branch v4a)
+- audio_effects.xml: library v4a_re and effect v4a_standard_re
+- SELinux: execmem for hal_audio_default (as per the ViPER README)
+
+The audioserver->unlabeled rule from the README is left out on purpose:
+it is only needed for unlabeled files after a dirty flash.
+---
+ configs/audio/audio_effects.xml      | 2 ++
+ lineage_camellia.mk                  | 3 +++
+ sepolicy/vendor/hal_audio_default.te | 3 +++
+ 3 files changed, 8 insertions(+)
+
+diff --git a/configs/audio/audio_effects.xml b/configs/audio/audio_effects.xml
+index 272ad86..f86a918 100644
+--- a/configs/audio/audio_effects.xml
++++ b/configs/audio/audio_effects.xml
+@@ -15,6 +15,7 @@
+          <library name="pre_processing" path="libaudiopreprocessing.so"/>
+     -->
+     <libraries>
++        <library name="v4a_re" path="libv4a_re.so"/>
+         <library name="bundle" path="libbundlewrapper.so"/>
+         <library name="reverb" path="libreverbwrapper.so"/>
+         <library name="visualizer" path="libvisualizer.so"/>
+@@ -56,6 +57,7 @@
+         <effect name="reverb_pre_aux" library="reverb" uuid="f29a1400-a3bb-11df-8ddc-0002a5d5c51b"/>
+         <effect name="reverb_pre_ins" library="reverb" uuid="172cdf00-a3bc-11df-a72f-0002a5d5c51b"/>
+         <effect name="visualizer" library="visualizer" uuid="d069d9e0-8329-11df-9168-0002a5d5c51b"/>
++        <effect name="v4a_standard_re" library="v4a_re" uuid="90380da3-8536-4744-a6a3-5731970e640f"/>
+         <effect name="downmix" library="downmix" uuid="93f04452-e4fe-41cc-91f9-e475b6d1d69f"/>
+         <effect name="loudness_enhancer" library="loudness_enhancer" uuid="fa415329-2034-4bea-b5dc-5b381c8d1e2c"/>
+         <effect name="dynamics_processing" library="dynamics_processing" uuid="e0e6539b-1781-7261-676f-6d7573696340"/>
+diff --git a/lineage_camellia.mk b/lineage_camellia.mk
+index f74fb3a..d9ada91 100644
+--- a/lineage_camellia.mk
++++ b/lineage_camellia.mk
+@@ -26,6 +26,9 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
+ $(call inherit-product, device/xiaomi/camellia/device.mk)
+ 
+ # Inherit some common LineageOS stuff.
++# ViPER4AndroidFX (audio effects)
++$(call inherit-product, packages/apps/ViPER4AndroidFX/config.mk)
++
+ $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
+ 
+ # Device identifier (matches stock SKU detection: ro.boot.product.hardware.sku)
+diff --git a/sepolicy/vendor/hal_audio_default.te b/sepolicy/vendor/hal_audio_default.te
+index c3b70ce..9851ce4 100644
+--- a/sepolicy/vendor/hal_audio_default.te
++++ b/sepolicy/vendor/hal_audio_default.te
+@@ -1,2 +1,5 @@
+ allow hal_audio_default persist_data_file:dir search;
+ allow hal_audio_default sysfs_audio_pa:file rw_file_perms;
++
++# ViPER4AndroidFX (libv4a_re inside the effects HAL)
++allow hal_audio_default self:process execmem;
+-- 
+2.34.1
+
