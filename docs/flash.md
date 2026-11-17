@@ -103,6 +103,8 @@ Unplug and replug the phone after installing the udev rules.
    adb sideload MindTheGapps-16.0.0-arm64-<date>.zip
    ```
 
+   `03-download.sh` already downloaded it to `$OUTPUT_DIR/downloads/` (default `WITH_GAPPS=true`).
+
    If the recovery warns about a signature, confirm with *Yes*.
 5. **Reboot system now**. The first start takes a few minutes.
 

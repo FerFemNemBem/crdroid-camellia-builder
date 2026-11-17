@@ -55,6 +55,9 @@ export PATH="$HOME/bin:$PATH"
 # <<< crdroid-camellia-builder <<<
 RC
 fi
+# "ccb" = jump into this repository folder from anywhere
+sed -i '/^alias ccb=/d' "$HOME/.bashrc"
+printf 'alias ccb=%q\n' "cd $(printf %q "$CCB_ROOT")" >> "$HOME/.bashrc"
 
 log "--- ccache ($CCACHE_SIZE in $CCACHE_DIR) ---"
 mkdir -p "$CCACHE_DIR"
@@ -73,9 +76,18 @@ git lfs install
 git config --global color.ui auto
 
 log "=== Done ==="
+echo
+echo "New command: type  ccb  to jump into this repository folder ($CCB_ROOT)."
+echo "All commands of the guide must be run from there."
+echo
 if is_wsl; then
-  echo "Restart the distribution once (Windows PowerShell:  wsl --terminate <distribution>),"
-  echo "open it again and continue with:  bash scripts/02-check-host.sh"
+  D=${WSL_DISTRO_NAME:-<distribution>}
+  echo "Next: restart the distribution once."
+  echo "  1. type  exit  to leave Ubuntu"
+  echo "  2. in PowerShell:  wsl --terminate $D"
+  echo "  3. in PowerShell:  wsl -d $D"
+  echo "  4. in Ubuntu:      ccb"
+  echo "  5. in Ubuntu:      bash scripts/02-check-host.sh"
 else
-  echo "Open a new terminal (for PATH) and continue with:  bash scripts/02-check-host.sh"
+  echo "Next: open a new terminal, then:  ccb  and  bash scripts/02-check-host.sh"
 fi

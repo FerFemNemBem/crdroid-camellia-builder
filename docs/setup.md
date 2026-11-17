@@ -12,7 +12,9 @@ cd crdroid-camellia-builder
 bash scripts/01-setup-host.sh
 ```
 
-Open a new terminal afterwards and continue with [Configuration](#configuration).
+Open a new terminal afterwards. The setup installs the shortcut `ccb`, which jumps into the
+repository folder - all commands of this guide are run from there. Continue with
+[Configuration](#configuration).
 
 ## B) Windows with WSL2
 
@@ -61,11 +63,16 @@ them first. The settings apply to every distribution.
 
 ### 5. Install the build tools
 
+Open the distribution from PowerShell:
+
 ```powershell
 wsl -d crdroid
 ```
 
-Inside Ubuntu (a Windows drive `D:` is `/mnt/d`):
+You are now in Ubuntu, but still in your **Windows user folder** (`/mnt/c/Users/<you>`) - that is where
+WSL starts. Change into the repository folder. Windows drives appear under `/mnt/` with a
+**lower-case letter**: `D:\crdroid-camellia-builder` is `/mnt/d/crdroid-camellia-builder`
+(`/mnt/D/...` does not exist).
 
 ```bash
 cd /mnt/d/crdroid-camellia-builder
@@ -74,7 +81,18 @@ bash scripts/01-setup-host.sh
 
 If the distribution was imported (older WSL), the script first asks you to create a user and to
 restart the distribution - just follow the instructions and run it again.
-At the end restart the distribution once (`wsl --terminate crdroid` in PowerShell) and open it again.
+
+At the end the script prints the next steps. Restart the distribution once:
+
+1. `exit` - leaves Ubuntu, you are back in PowerShell
+2. `wsl --terminate crdroid`
+3. `wsl -d crdroid` - opens it again (again in your Windows user folder)
+4. `ccb` - **new shortcut** installed by the setup script: jumps into the repository folder
+
+> [!IMPORTANT]
+> **Every command of this guide is run inside the repository folder.** Each time you open the
+> distribution, type `ccb` first. A message like `scripts/02-check-host.sh: No such file or directory`
+> means you are in the wrong folder.
 
 > [!IMPORTANT]
 > The **source tree must live inside the Linux file system** (the default `WORK_DIR=$HOME/android`).
@@ -83,9 +101,20 @@ At the end restart the distribution once (`wsl --terminate crdroid` in PowerShel
 
 ## Configuration
 
+Optional - without a `config.env` the defaults are used (test keys, GApps download, ViPER, results in
+`~/crdroid-out`). To change something:
+
+**Windows (repository on a Windows drive):** in Explorer open the repository folder, copy
+`config.env.example` and rename the copy to **`config.env`**. Turn on *View -> Show -> File name
+extensions* first, otherwise Windows may silently name it `config.env.txt`. Open it with Notepad
+(right-click -> *Open with*) and edit it. Windows line endings are fine.
+
+**Linux / inside Ubuntu:**
+
 ```bash
+ccb
 cp config.env.example config.env
-nano config.env
+nano config.env          # save: Ctrl+O, Enter; quit: Ctrl+X
 ```
 
 All settings are explained in the file. The most important ones:
@@ -93,12 +122,12 @@ All settings are explained in the file. The most important ones:
 | setting | meaning |
 |---|---|
 | `WORK_DIR` | source tree, cache and keys (~300 GB, Linux file system) |
-| `OUTPUT_DIR` | finished builds, downloads, logs, key backups; on WSL e.g. `/mnt/d/crdroid` |
-| `WITH_VIPER` / `WITH_GAPPS` | ViPER4AndroidFX on/off, download MindTheGapps on/off |
-| `SIGNING` | `own` (recommended) or `test`, see [signing.md](signing.md) |
+| `OUTPUT_DIR` | finished builds, downloads, logs; on WSL a Windows drive is handy, e.g. `/mnt/d/crdroid` (= `D:\crdroid`, lower-case letter!) |
+| `WITH_VIPER` / `WITH_GAPPS` | ViPER4AndroidFX on/off (default on), download MindTheGapps on/off (default on) |
+| `SIGNING` | `test` (default, nothing to manage) or `own` (recommended for daily use and OTA), see [signing.md](signing.md) - decide before the first installation |
 | `OTA_URL` / `OTA_UPLOAD` | only for your own update server, see [ota-server.md](ota-server.md) |
 
-Then check everything:
+Then check everything (inside the repository folder - `ccb`):
 
 ```bash
 bash scripts/02-check-host.sh

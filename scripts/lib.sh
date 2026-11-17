@@ -14,8 +14,8 @@ SYNC_JOBS=6
 CCACHE_SIZE="50G"
 MIN_RAM_GB=30
 WITH_VIPER=true
-WITH_GAPPS=false
-SIGNING="own"
+WITH_GAPPS=true
+SIGNING="test"
 KEY_SUBJECT=""
 OTA_URL=""
 OTA_UPLOAD=""
@@ -25,8 +25,9 @@ WSL_DISTRO="crdroid"
 
 CCB_CONFIG=${CCB_CONFIG:-$CCB_ROOT/config.env}
 if [ -f "$CCB_CONFIG" ]; then
+  # tolerate files edited with Windows editors (CRLF line endings, UTF-8 BOM)
   # shellcheck source=/dev/null
-  . "$CCB_CONFIG"
+  . <(sed -e '1s/^\xEF\xBB\xBF//' -e 's/\r$//' "$CCB_CONFIG")
 fi
 
 # ---------- fixed values for this device / ROM ----------

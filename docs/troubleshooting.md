@@ -31,8 +31,31 @@ in `.wslconfig` (then `wsl --shutdown`), or lower `JOBS` in `config.env`.
 CellBroadcastService fork is missing; make sure `.repo/local_manifests/camellia.xml` is the one from
 this repository and sync again.
 
-**Disk full** - the tree needs ~300 GB. On WSL the virtual disk grows automatically; space freed
-inside Linux returns to Windows after `sudo fstrim -av` (the distribution is created "sparse").
+**Disk full** - the tree needs ~300 GB.
+
+**WSL: deleted files, but the disk file on Windows stays big** - the virtual disk (`ext4.vhdx`) grows
+automatically but does not shrink by itself. Automatic reclaiming for "sparse" disks is still
+experimental in WSL and often does nothing. Reliable way (PowerShell **as administrator**;
+`wsl --shutdown` stops **all** WSL distributions):
+
+```powershell
+wsl -d <distribution> -- sudo fstrim -av
+wsl --shutdown
+wsl --manage <distribution> --set-sparse false
+diskpart
+```
+```
+select vdisk file="<folder>\ext4.vhdx"
+attach vdisk readonly
+compact vdisk
+detach vdisk
+exit
+```
+```powershell
+wsl --manage <distribution> --set-sparse true
+```
+`compact vdisk` takes up to half an hour for a large disk. diskpart refuses sparse files ("must not be
+set as sparse"), hence switching it off first.
 
 ## Phone
 

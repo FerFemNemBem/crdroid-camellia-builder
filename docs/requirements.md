@@ -14,7 +14,7 @@ Other Linux distributions may work but are not tested.
 
 ### Measured on the author's PC
 
-16 CPU threads, 62 GB RAM (50 GB assigned to WSL2), Samsung 870 EVO SATA SSD, sync running at
+16 CPU threads, 62 GB RAM (50 GB assigned to WSL2), SATA SSD, sync running at
 roughly 250-400 Mbit/s:
 
 | step | time | disk space |

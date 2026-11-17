@@ -1,7 +1,7 @@
 # Building
 
-All commands run in the repository folder, in Ubuntu or in the WSL distribution.
-Logs of every step are written to `$OUTPUT_DIR/logs/`.
+All commands run **in the repository folder**, in Ubuntu or in the WSL distribution - type `ccb`
+first (shortcut installed by `01-setup-host.sh`). Logs of every step are written to `$OUTPUT_DIR/logs/`.
 
 ## The easy way: everything at once
 
@@ -9,8 +9,8 @@ Logs of every step are written to `$OUTPUT_DIR/logs/`.
 bash scripts/build-all.sh          # Windows: double-click scripts\windows\build-all.bat
 ```
 
-- asks everything at the start: a name for your key certificate (unless `KEY_SUBJECT` is set) and a
-  passphrase for the encrypted key backup
+- with the default `SIGNING=test` it asks nothing at all; with `SIGNING=own` it asks at the start for
+  a name for your key certificate (unless `KEY_SUBJECT` is set) and a passphrase for the key backup
 - then runs steps 1-5 below (plus publishing if an OTA server is configured) without further questions
 - runs inside **tmux** (session `crdroid-build`); the blue bar at the bottom shows
   `step 3/6: sync | step 0:12:34 | total 1:02:06 | disk +37 GB` and a spinner, updated every 5 seconds;
@@ -61,13 +61,14 @@ itself; you can also lower `SYNC_JOBS`. Interrupting with Ctrl+C and starting ag
 To build exactly the state of a tested release instead of the latest one, see
 [updates.md](updates.md#known-good-states).
 
-## 3. Create your signing keys (once)
+## 3. Signing keys
 
 ```bash
 bash scripts/05-keys.sh
 ```
 
-Creates your own release keys in `$WORK_DIR/keys`, installs them into the source tree and makes an
+With the default `SIGNING=test` this does nothing (the build uses the public test keys).
+With `SIGNING=own` it creates your own release keys in `$WORK_DIR/keys`, installs them into the source tree and makes an
 **encrypted backup** in `$OUTPUT_DIR/key-backup` (you choose a passphrase). Copy that backup to a
 second place. Read [signing.md](signing.md) - losing the keys has consequences.
 

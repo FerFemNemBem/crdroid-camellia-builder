@@ -38,7 +38,8 @@ build once (sideload or OTA from the old URL).
   that host only and relaxes the updater's HTTPS check for that host only.
 
 Either way the phone installs only packages signed with **your release key**; a manipulated
-download is rejected. HTTPS additionally hides what you download and from where.
+download is rejected. This protection only exists with own keys (`SIGNING=own`) - with the public
+test keys anybody could build a package your phone accepts, so use own keys together with OTA. HTTPS additionally hides what you download and from where.
 
 ## Example: Caddy on a Raspberry Pi (Debian / Raspberry Pi OS)
 

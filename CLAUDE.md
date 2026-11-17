@@ -33,6 +33,13 @@ For debugging, maintenance and release work use the skill in
 | `patches/device/` | `git am` patches for the device tree; `patches/crdroid-16.0/` replacements for device-tree patches |
 | `docs/` | user documentation (English) |
 
+## Defaults worth knowing
+
+`SIGNING=test` (public AOSP test keys; `own` recommended for daily use/OTA, switching needs Format data),
+`WITH_GAPPS=true` (MindTheGapps downloaded, never built in), `WITH_VIPER=true`, `OTA_URL` empty.
+`config.env` may have Windows line endings / BOM - `lib.sh` strips them. Users on WSL start in
+`/mnt/c/Users/<name>`; the alias `ccb` (written by `01-setup-host.sh`) jumps into the repository.
+
 ## Conventions
 
 - English, ASCII only in scripts; bash with `set -uo pipefail` (or `-euo`), helpers from `lib.sh`.

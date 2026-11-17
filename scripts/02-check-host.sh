@@ -38,6 +38,7 @@ for u in https://android.googlesource.com https://github.com https://raw.githubu
   c=$(curl -s -o /dev/null -m 15 -w '%{http_code}' "$u"); [[ $c =~ ^[23] ]] && ok "reach $u" || bad "cannot reach $u (HTTP $c)"
 done
 
+[ "$SIGNING" = test ] && hint "SIGNING=test: public test keys. For daily use / OTA set SIGNING=own BEFORE the first installation (docs/signing.md)"
 log "--- settings ---"
 log "  WORK_DIR=$WORK_DIR  OUTPUT_DIR=$OUTPUT_DIR  JOBS=$JOBS  SYNC_JOBS=$SYNC_JOBS"
 log "  SIGNING=$SIGNING  WITH_VIPER=$WITH_VIPER  WITH_GAPPS=$WITH_GAPPS  OTA_URL=${OTA_URL:-(none)}"

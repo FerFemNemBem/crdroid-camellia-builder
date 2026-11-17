@@ -2,7 +2,7 @@
 
 Build **crDroid 12 (Android 16)** yourself for the **Redmi Note 10 5G / POCO M3 Pro 5G**
 (codename `camellia` / `camellian`, MediaTek Dimensity 700) - on Ubuntu 24.04 or Windows with WSL2,
-step by step, signed with your own keys, optionally with updates from your own OTA server.
+step by step, optionally signed with your own keys and with updates from your own OTA server.
 
 > [!WARNING]
 > **No warranty. Use at your own risk.**
@@ -42,7 +42,7 @@ look at fieldmar's releases: <https://github.com/fieldmar/android_device_xiaomi_
 ## What you get
 
 - crDroid 12.x (Android 16, based on LineageOS 23.2), built from source on your own computer
-- signed with **your own release keys** (not the public test keys)
+- signed with the public test keys (default, nothing to manage) or with **your own release keys** (one setting, recommended for daily use)
 - optional: **ViPER4AndroidFX** audio effects (on by default)
 - optional: OTA updates from **your own web server** through the built-in crDroid updater
 - one command (or one double-click on Windows) to check for upstream changes and rebuild
@@ -93,7 +93,7 @@ optionally `config.env`) **one command does everything**:
 bash scripts/build-all.sh        # Windows: double-click scripts\windows\build-all.bat
 ```
 
-It asks its questions at the start (key backup passphrase), then runs checks, downloads, sync, keys,
+With the default test keys it asks nothing (with own keys: a backup passphrase at the start), then runs checks, downloads, sync, keys,
 preparation and build unattended for several hours inside tmux, with a status bar showing the
 current step, elapsed time and disk usage. Close the window any time - it keeps running; start it
 again to see it or to resume after an interruption.
@@ -110,7 +110,7 @@ bash scripts/02-check-host.sh        # is this computer ready?
 bash scripts/03-download.sh          # stock ROM for the vendor files (+ GApps if enabled)
 tmux new -s build                    # recommended for the long steps
 bash scripts/04-sync.sh              # source code, ~150 GB         (1-3 h)
-bash scripts/05-keys.sh              # your own signing keys        (once!)
+bash scripts/05-keys.sh              # own signing keys - only with SIGNING=own
 bash scripts/06-prepare.sh           # patches, firmware, vendor files
 bash scripts/07-build.sh             # build                        (2-4 h the first time)
 ```
