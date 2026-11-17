@@ -9,6 +9,9 @@ step by step, optionally signed with your own keys and with updates from your ow
 > Flashing a custom ROM can erase all your data and, if something goes wrong, can leave your phone
 > unable to boot. You alone are responsible for your device.
 >
+> This project is meant as a **test base for your own builds and experiments**. The author does
+> **not** use the phone as a daily driver - only as a test device.
+>
 > This project has only been tested **rudimentarily, on a single phone (M2103K19G) without a SIM card**.
 > See [What has been tested](#what-has-been-tested). There is **no support** - please do not expect
 > answers to questions or issues. Discussions among users are welcome.
