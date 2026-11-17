@@ -65,10 +65,14 @@ On one Redmi Note 10 5G Global (M2103K19G), used **without a SIM card**, WLAN on
 | display, fingerprint sensor | other models / variants (see [requirements](docs/requirements.md)) |
 | ViPER4AndroidFX, OTA updates from an own server | long-term battery life |
 
-**Known limitation:** Netflix (login refused) and Disney+ (playback refused) do not work. Widevine
-itself works (security level L1, HDCP 2.3), but these apps require Google's Play Integrity verdict
-*device integrity*, which a phone with an unlocked bootloader does not pass (only *basic integrity*
-does). This affects practically every custom ROM. Apps without this check work (tested: Spotify).
+**Known problems:**
+- **Disney+** refuses playback ("something went wrong"): the licence is obtained (Widevine L1 works,
+  HDCP 2.3), but the MediaTek *secure video path* fails - the protected memory in the TEE
+  (GenieZone/MTEE) cannot be set up, so the secure video decoder stops. Under investigation.
+- **Netflix** refuses the login. The app queries Google's Play Integrity, and a phone with an
+  unlocked bootloader only passes *basic integrity*, not *device integrity* - this part affects
+  practically every custom ROM.
+- Apps without these requirements work (tested: Spotify).
 
 ## Requirements in short
 
