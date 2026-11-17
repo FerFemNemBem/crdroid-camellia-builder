@@ -53,6 +53,9 @@ bash scripts/03-download.sh
 ```
 
 Downloads the official MIUI 14 Global recovery ROM (3.6 GB) from Xiaomi and verifies its checksum.
+Xiaomi's download mirrors differ a lot in speed (from below 0.1 MB/s to over 10 MB/s, depending on
+time of day and region), so the script first measures each mirror with a 10 MB sample, shows the
+result and downloads from the fastest one; if it fails, the next one is used.
 The build extracts the proprietary vendor files (drivers, firmware) from it - they are not allowed
 to be redistributed, so everybody extracts them on their own computer. With `WITH_GAPPS=true` the latest
 MindTheGapps for Android 16 is downloaded as well (for flashing, not for building).

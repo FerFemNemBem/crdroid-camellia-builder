@@ -46,6 +46,7 @@ First questions when helping: which step failed, the last ~50 lines of `$LOG_DIR
 | upload asks for a password / lands in the home folder | key not in the target user's `authorized_keys` (e.g. root's) | see `docs/ota-server.md`; `ssh -v` shows "Offering public key" vs "denied" |
 | JSON upload `could not make way for new regular file` under rrsync | uploading to a file path | upload into the directory (`$OTA_UPLOAD/`), the local file already has the right name |
 | sideload stops at 47 % | normal | check the phone's screen |
+| stock ROM download crawls (kB/s) | Xiaomi mirrors vary hugely; the first one is not always fast | `03-download.sh` measures all `STOCK_MIRRORS` (10 MB sample) and uses the fastest; list can be set in config.env |
 | `scripts/...: No such file or directory` | WSL starts in `/mnt/c/Users/<name>`, not in the repository | `ccb` (alias from 01) or `cd /mnt/<lower-case drive>/...`; Windows drives are lower-case under `/mnt/` |
 | a config value is ignored or contains `\r` | `config.env` edited on Windows | `lib.sh` strips CRLF/BOM; check the file is really named `config.env`, not `config.env.txt` |
 | WSL disk file stays big after deleting files / `fstrim` | sparse auto-reclaim is experimental and often does nothing | `wsl --shutdown`, `--set-sparse false`, diskpart `compact vdisk`, `--set-sparse true` (docs/troubleshooting.md) |

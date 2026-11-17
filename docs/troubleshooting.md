@@ -2,6 +2,13 @@
 
 Logs: `$OUTPUT_DIR/logs/<step>.log`. Search them for `FAILED:`, `error:` or `!!!`.
 
+## Downloads
+
+**The stock ROM download is very slow** - `03-download.sh` already picks the fastest Xiaomi mirror
+(see the measured speeds in `$OUTPUT_DIR/logs/03-download.log`). If all are slow, try again later
+(evenings are often busy) or set your own mirror list with `STOCK_MIRRORS` in `config.env`.
+Interrupting is safe: running the script again resumes the download.
+
 ## Sync
 
 **`429 Too Many Requests` / `RESOURCE_EXHAUSTED`** - the Google/GitHub servers limit downloads.

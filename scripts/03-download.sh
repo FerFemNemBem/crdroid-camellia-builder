@@ -16,7 +16,15 @@ f=$DL_DIR/$STOCK_ZIP
 if [ -f "$f.ok" ]; then
   log "Stock ROM already downloaded and verified."
 else
-  for h in $STOCK_MIRRORS; do
+  # Xiaomi's mirrors differ wildly in speed (from 0.1 to 10+ MB/s, depending on time and region):
+  # test each with a 10 MB sample and use the fastest first.
+  log "Testing download mirrors ..."
+  ORDER=$(for h in $STOCK_MIRRORS; do
+    sp=$(curl -s -o /dev/null -r 0-10000000 -m 20 -w '%{speed_download}' "https://$h/$STOCK_VERSION/$STOCK_ZIP" 2>/dev/null | cut -d. -f1)
+    log "  $h: $(( ${sp:-0} / 1048576 )).$(( ${sp:-0} % 1048576 * 10 / 1048576 )) MB/s" >&2
+    echo "${sp:-0} $h"
+  done | sort -rn | awk '$1 > 0 {print $2}')
+  for h in ${ORDER:-$STOCK_MIRRORS}; do
     log "Downloading $STOCK_ZIP from $h ..."
     curl -fL -C - --retry 3 --retry-delay 5 -o "$f" "https://$h/$STOCK_VERSION/$STOCK_ZIP" && break
     warn "mirror $h failed, trying the next one"

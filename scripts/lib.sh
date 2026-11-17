@@ -40,7 +40,8 @@ ZIP_PATTERN="crDroidAndroid-16.0-*-$DEVICE-*.zip"
 STOCK_VERSION=V14.0.6.0.TKSMIXM
 STOCK_ZIP=miui_CAMELLIANGlobal_V14.0.6.0.TKSMIXM_8be0f8ee2d_13.0.zip
 STOCK_MD5=8be0f8ee2dfd7c76b06c13cbf652bbd0
-STOCK_MIRRORS="bigota.d.miui.com cdnorg.d.miui.com bkt-sgp-miui-ota-update-alisgp.oss-ap-southeast-1.aliyuncs.com"
+# download mirrors; 03-download.sh tests them and uses the fastest. Can be set in config.env.
+: "${STOCK_MIRRORS:=bkt-sgp-miui-ota-update-alisgp.oss-ap-southeast-1.aliyuncs.com cdnorg.d.miui.com bigota.d.miui.com}"
 
 # ---------- derived paths ----------
 SRC=$WORK_DIR/crdroid
