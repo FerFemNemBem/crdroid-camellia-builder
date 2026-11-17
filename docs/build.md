@@ -9,6 +9,12 @@ first (shortcut installed by `01-setup-host.sh`). Logs of every step are written
 bash scripts/build-all.sh          # Windows: double-click scripts\windows\build-all.bat
 ```
 
+> [!NOTE]
+> **After starting it, plan to wait about 4-7 hours** for the very first build: roughly 1-3 hours
+> for downloading the sources and 2-4 hours for building, depending on your PC and internet
+> connection (author's PC: about 5.5 hours in total). You do not need to watch it - leave it running,
+> e.g. overnight. Later updates take only 15-60 minutes.
+
 - with the default `SIGNING=test` it asks nothing at all; with `SIGNING=own` it asks at the start for
   a name for your key certificate (unless `KEY_SUBJECT` is set) and a passphrase for the key backup
 - then runs steps 1-5 below (plus publishing if an OTA server is configured) without further questions
