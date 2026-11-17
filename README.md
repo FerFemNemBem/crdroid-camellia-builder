@@ -61,9 +61,14 @@ On one Redmi Note 10 5G Global (M2103K19G), used **without a SIM card**, WLAN on
 | Works | Not tested |
 |---|---|
 | WLAN, Bluetooth audio (pairing, music, pause/resume) | phone calls, SMS, mobile data, VoLTE, dual SIM |
-| audio, video and streaming apps | camera (beyond a quick look), NFC, GPS |
+| audio, local video playback, Spotify | camera (beyond a quick look), NFC, GPS |
 | display, fingerprint sensor | other models / variants (see [requirements](docs/requirements.md)) |
 | ViPER4AndroidFX, OTA updates from an own server | long-term battery life |
+
+**Known limitation:** Netflix (login refused) and Disney+ (playback refused) do not work. Widevine
+itself works (security level L1, HDCP 2.3), but these apps require Google's Play Integrity verdict
+*device integrity*, which a phone with an unlocked bootloader does not pass (only *basic integrity*
+does). This affects practically every custom ROM. Apps without this check work (tested: Spotify).
 
 ## Requirements in short
 
