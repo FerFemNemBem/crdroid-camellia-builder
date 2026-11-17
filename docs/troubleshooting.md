@@ -11,6 +11,9 @@ later.
 **`remove-project ... not found`** - your `repo` tool is too old for `optional="true"`. `repo` updates
 itself on the next sync; or reinstall it with `scripts/01-setup-host.sh`.
 
+**The progress shows "51h left" (or similar)** - normal in the first minutes; the estimate settles
+once more data has been processed.
+
 ## Prepare
 
 **`!!! ... does not apply`** - upstream changed the code a patch touches. See

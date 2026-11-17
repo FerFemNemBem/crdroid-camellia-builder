@@ -14,6 +14,10 @@ bash scripts/build-all.sh          # Windows: double-click scripts\windows\build
 > for downloading the sources and 2-4 hours for building, depending on your PC and internet
 > connection (author's PC: about 5.5 hours in total). You do not need to watch it - leave it running,
 > e.g. overnight. Later updates take only 15-60 minutes.
+>
+> Do not be alarmed by the remaining-time estimates at the beginning: the download and the build
+> may show something like **"51h left"** or a huge "remaining" value in the first minutes. That is
+> normal - the estimate is based on very little data and usually drops to a realistic value later.
 
 - with the default `SIGNING=test` it asks nothing at all; with `SIGNING=own` it asks at the start for
   a name for your key certificate (unless `KEY_SUBJECT` is set) and a passphrase for the key backup
