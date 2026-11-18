@@ -36,7 +36,9 @@ For debugging, maintenance and release work use the skill in
 ## Defaults worth knowing
 
 `SIGNING=test` (public AOSP test keys; `own` recommended for daily use/OTA, switching needs Format data),
-`WITH_GAPPS=true` (MindTheGapps downloaded, never built in), `WITH_VIPER=true`, `OTA_URL` empty.
+`WITH_GAPPS=true` (MindTheGapps downloaded, never built in), `WITH_VIPER=true`, `WIDEVINE_L3=false`
+(optional patch 0004 drops liboemcrypto -> Widevine L3, workaround for the broken secure video path),
+`OTA_URL` empty.
 `config.env` may have Windows line endings / BOM - `lib.sh` strips them. Users on WSL start in
 `/mnt/c/Users/<name>`; the alias `ccb` (written by `01-setup-host.sh`) jumps into the repository.
 

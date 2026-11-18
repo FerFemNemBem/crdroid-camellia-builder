@@ -74,6 +74,12 @@ set as sparse"), hence switching it off first.
 Check with `adb logcat | grep "No match for app"` - no output means every system app got its
 SELinux domain.
 
+**Disney+ (or another DRM video app) shows "something went wrong" when playing** - the MediaTek
+secure video path does not work with the source-built kernel (details in the README, "Known
+problems"). Workaround: set `WIDEVINE_L3=true` in `config.env`, rebuild and install the update.
+Widevine then reports L3 (check with the app *DRM Info*) and videos play in SD. Some apps remember
+the old security level - clear their app data once. Set it back to `false` when the kernel is fixed.
+
 **ViPER app missing** - `WITH_VIPER=false`, or `packages/apps/ViPER4AndroidFX` was not synced
 (the build stops with an error in that case). Sync again.
 

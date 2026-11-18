@@ -41,7 +41,7 @@ done
 [ "$SIGNING" = test ] && hint "SIGNING=test: public test keys. For daily use / OTA set SIGNING=own BEFORE the first installation (docs/signing.md)"
 log "--- settings ---"
 log "  WORK_DIR=$WORK_DIR  OUTPUT_DIR=$OUTPUT_DIR  JOBS=$JOBS  SYNC_JOBS=$SYNC_JOBS"
-log "  SIGNING=$SIGNING  WITH_VIPER=$WITH_VIPER  WITH_GAPPS=$WITH_GAPPS  OTA_URL=${OTA_URL:-(none)}"
+log "  SIGNING=$SIGNING  WITH_VIPER=$WITH_VIPER  WITH_GAPPS=$WITH_GAPPS  WIDEVINE_L3=$WIDEVINE_L3  OTA_URL=${OTA_URL:-(none)}"
 if [ $ERR = 0 ]; then log "=== All checks passed - continue with scripts/03-download.sh ==="
 else log "=== Some checks FAILED - see above ==="; fi
 exit $ERR

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # 06-prepare.sh - prepare the synced source tree for a camellia build:
-#   A) device tree patches (patches/device/: VoLTE fix, gold connectivity firmware list, ViPER)
+#   A) device tree patches (patches/device/: VoLTE fix, gold connectivity firmware list, ViPER,
+#      optional Widevine L3)
 #   B) the 7 required patches shipped in device/xiaomi/camellia/patches/
 #      (a file with the same name in patches/crdroid-16.0/ replaces the device tree version)
 #   C) the 8 "gold" connectivity firmware files, checked against the SHA-1 in proprietary-files.txt
@@ -28,8 +29,22 @@ log "--- A) device tree patches ---"
 for p in "$CCB_ROOT"/patches/device/*.patch; do
   [ -f "$p" ] || continue
   n=$(basename "$p"); s=$(patch_subject "$p")
-  if [[ $n == *ViPER* ]] && ! is_true "$WITH_VIPER"; then log "skipped (WITH_VIPER=false): $s"; continue; fi
-  if has_subject "$DT" "$s" || git -C "$DT" apply --reverse --check "$p" 2>/dev/null; then log "already applied: $s"; continue; fi
+  # optional patches: applied or removed according to their switch in config.env
+  opt=""
+  case $n in *ViPER*) opt=WITH_VIPER ;; *Widevine-L3*) opt=WIDEVINE_L3 ;; esac
+  if [ -n "$opt" ]; then
+    if git -C "$DT" apply --reverse --check "$p" 2>/dev/null; then
+      if is_true "${!opt}"; then log "already applied: $s"
+      else
+        git -C "$DT" apply -R "$p" && git -C "$DT" commit -qam "Remove: $s" && log "removed ($opt=false): $s" \
+          || fail "could not remove: $s"
+      fi
+      continue
+    fi
+    if ! is_true "${!opt}"; then log "skipped ($opt=false): $s"; continue; fi
+  elif has_subject "$DT" "$s" || git -C "$DT" apply --reverse --check "$p" 2>/dev/null; then
+    log "already applied: $s"; continue
+  fi
   if git -C "$DT" am --keep-cr -q "$p"; then log "applied: $s"
   else git -C "$DT" am --abort 2>/dev/null; fail "device patch does not apply: $n"; fi
 done

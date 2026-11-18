@@ -1,0 +1,29 @@
+From 03d185a003ad9c9e6da7c2e706b2264a75128898 Mon Sep 17 00:00:00 2001
+From: FerFemNemBem <74377239+FerFemNemBem@users.noreply.github.com>
+Date: Wed, 18 Nov 2026 09:17:11 +0100
+Subject: [PATCH] camellia: leave out liboemcrypto (Widevine L3)
+
+Without liboemcrypto.so the Widevine HAL cannot reach the TEE and falls back to
+software security level L3. Workaround for the broken MediaTek secure video path
+(protected playback fails with the source-built kernel): DRM apps then use the
+normal video decoder and play in SD resolution. Optional, see WIDEVINE_L3.
+---
+ proprietary-files.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/proprietary-files.txt b/proprietary-files.txt
+index a508b9a..6751841 100644
+--- a/proprietary-files.txt
++++ b/proprietary-files.txt
+@@ -1027,7 +1027,7 @@ vendor/firmware/nt36672d_tm_03_ts_mp.bin
+ vendor/bin/hw/android.hardware.drm@1.4-service.widevine
+ vendor/etc/init/android.hardware.drm@1.4-service.widevine.rc
+ vendor/etc/vintf/manifest/manifest_android.hardware.drm@1.4-service.widevine.xml
+-vendor/lib64/liboemcrypto.so
++# vendor/lib64/liboemcrypto.so  (left out on purpose: Widevine falls back to L3, see crdroid-camellia-builder WIDEVINE_L3)
+ vendor/lib64/libtlcWidevineModularDrm.so
+ vendor/lib64/liburee_meta_drmkeyinstall.so
+ vendor/lib64/libwvhidl.so
+-- 
+2.43.0
+
