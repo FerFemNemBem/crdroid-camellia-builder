@@ -1,7 +1,7 @@
 # Known-good states
 
 One file per release tag of this repository (`v1.0.xml`, ...): the output of `repo manifest -r`
-right after the sync of a build that was installed and tested on a phone. It pins every project
+right after the sync of a build that I installed and tested on my phone. It pins every project
 (crDroid, LineageOS forks, device tree, kernel, ViPER) to an exact commit.
 
 Use it with `bash scripts/04-sync.sh --known-good <tag>`, see [docs/updates.md](../../docs/updates.md#known-good-states).

@@ -38,7 +38,7 @@ Optional patches follow their switch in both directions: switching one off and r
 
 The pull requests are included as files so the build does not depend on them staying open on GitHub.
 fieldmar's own branch (`camellian-23.2`) additionally carries a few stock modem files; they are not
-part of this builder, which has only been tested without a SIM card.
+part of this builder, because I can only test without a SIM card.
 
 ### Required patches from the device tree
 
@@ -65,6 +65,6 @@ What remains: no abort on 4.14 in `NetBpfLoad.cpp`, no reboot loop in `netbpfloa
 ## Source state
 
 Right after every sync `04-sync.sh` saves `repo manifest -r` - the exact upstream revision of every
-project, before our patches. `07-build.sh` copies it next to each build (`source-state.xml`) together
+project, before any patch is applied. `07-build.sh` copies it next to each build (`source-state.xml`) together
 with the version of this repository (`build-info.txt`). Release tags of this repository carry such a
 file as `manifests/known-good/<tag>.xml` ([updates.md](updates.md#known-good-states)).

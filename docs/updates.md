@@ -53,7 +53,7 @@ and the patches of this repository no longer match. Options:
 ## Known-good states
 
 Every release tag of this repository (e.g. `v1.0`) comes with `manifests/known-good/<tag>.xml`:
-the exact revision of every project of a build that was tested on a phone.
+the exact revision of every project of a build that I installed and tested on my phone.
 
 ```bash
 git checkout v1.0                         # scripts and patches of that release

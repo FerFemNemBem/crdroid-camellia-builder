@@ -12,7 +12,7 @@ step by step, optionally signed with your own keys and with updates from your ow
 > This project is meant as a **test base for your own builds and experiments**. I do **not** use
 > the phone as a daily driver - only as a test device.
 >
-> This project has only been tested **rudimentarily, on a single phone (M2103K19G) without a SIM card**.
+> I have only tested this project **rudimentarily, on my own phone (M2103K19G) without a SIM card**.
 > See [What has been tested](#what-has-been-tested).
 
 > [!TIP]
@@ -62,7 +62,7 @@ from their original sources while you build.
 
 ## What has been tested
 
-On one Redmi Note 10 5G Global (M2103K19G), used **without a SIM card**, WLAN only:
+On my own Redmi Note 10 5G Global (M2103K19G), which I use **without a SIM card**, WLAN only:
 
 | Works | Not tested |
 |---|---|
@@ -92,7 +92,7 @@ On one Redmi Note 10 5G Global (M2103K19G), used **without a SIM card**, WLAN on
 - a phone with an **unlocked bootloader** and **MIUI 14 firmware**
 - patience: the first download takes 1-3 hours, the first build 2-4 hours
 
-**For reference, my numbers** (one PC: 16 threads, 62 GB RAM of which 50 GB for WSL2,
+**For reference, my numbers** (my PC: 16 threads, 62 GB RAM of which 50 GB for WSL2,
 SATA SSD, internet via a 100 Mbit/s DSL line):
 
 | | time | disk space |

@@ -34,7 +34,7 @@ moves them aside (deletes nothing).
 
 Set `SIGNING="own"` in `config.env`. `scripts/05-keys.sh` (or `build-all.sh`) then creates your private release keys once, installs them into the source tree and
 makes an encrypted backup. Each person who builds with this project has their own keys - nobody
-else can create updates your phone would accept.
+else can create updates your phone would accept. I build my own phone with own keys.
 
 - Keys are created **without** a password in `$WORK_DIR/keys` (needed for unattended builds).
   Protect that folder like a password.

@@ -33,8 +33,8 @@ The device tree covers **camellia / camellian**:
 Redmi Note 10 5G, Redmi Note 10T 5G, Redmi Note 11 SE and POCO M3 Pro 5G (MediaTek Dimensity 700, MT6833).
 
 > [!IMPORTANT]
-> Only **M2103K19G (Redmi Note 10 5G Global)** has been tested, and only without a SIM card.
-> Other variants should work with the same build, but nobody has confirmed it for this project.
+> I have only tested **M2103K19G (Redmi Note 10 5G Global)**, and only without a SIM card.
+> Other variants should work with the same build, but nobody has confirmed it yet - test results are welcome.
 
 Find your model number in *Settings -> About phone -> All specs* or on the box. NFC models are
 "camellian"; the ROM detects the variant itself.
@@ -47,8 +47,9 @@ not supported by this device tree.
 
 **Recommended: MIUI V14.0.6.0 Global**, the version the vendor files of the build are extracted
 from - firmware and vendor files then match. How to put it on the phone:
-[flash.md -> Firmware](flash.md#firmware-miui-1406-global). Other MIUI 14 versions (e.g. EEA
-V14.0.4.0) boot and work too, but are less tested.
+[flash.md -> Firmware](flash.md#firmware-miui-1406-global). My phone first ran the EEA V14.0.4.0
+firmware - crDroid booted and worked with it too. I then switched to V14.0.6.0 Global, which my
+current builds run on. Other MIUI 14 versions should also work, but I have not tried them.
 
 ### Unlocked bootloader
 
