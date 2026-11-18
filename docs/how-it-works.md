@@ -17,7 +17,7 @@ kernel. This builder adds the parts needed to build all of that as crDroid.
 | `LineageOS/android_hardware_mediatek`, `_device_mediatek_sepolicy_vndr`, `_hardware_xiaomi` | shared MediaTek / Xiaomi code |
 | `cristidclxvi/android_vendor_mediatek_ims` | MediaTek IMS (VoLTE), pinned to a known commit |
 | AOSP `prebuilts/clang/host/linux-x86` at `android-12.1.0_r27` | clang r383902, the compiler the kernel needs |
-| 9 LineageOS forks (CellBroadcastService, Telephony, Iwlan, NeuralNetworks, keymint, aac, tremolo, hplip, broadcom wlan) | crDroid 16.0 still used the plain AOSP versions while LineageOS 23.2 carries forks with fixes; without the CellBroadcastService fork the build fails. Removed with `optional="true"`, so nothing breaks once crDroid forks them itself (`update.sh` reports that). |
+| 7 LineageOS forks (CellBroadcastService, Telephony, Iwlan, NeuralNetworks, keymint, aac, tremolo) | crDroid 16.0 still used the plain AOSP versions while LineageOS 23.2 carries forks with fixes; without the CellBroadcastService fork the build fails. Removed with `optional="true"`, so nothing breaks once crDroid forks them itself (`update.sh` reports that). Since crDroid 12.14 crDroid ships the hplip and broadcom wlan forks itself, so those two were dropped here. |
 | `TogoFire/packages_apps_ViPER4AndroidFX` | ViPER4AndroidFX |
 
 ## Patches

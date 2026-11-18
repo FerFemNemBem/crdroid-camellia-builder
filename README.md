@@ -61,7 +61,7 @@ On one Redmi Note 10 5G Global (M2103K19G), used **without a SIM card**, WLAN on
 | Works | Not tested |
 |---|---|
 | WLAN, Bluetooth audio (pairing, music, pause/resume) | phone calls, SMS, mobile data, VoLTE, dual SIM |
-| audio, local video playback, Spotify | camera (beyond a quick look), NFC, GPS |
+| audio, local video playback, Spotify, Disney+ (with `WIDEVINE_L3=true`, SD) | camera (beyond a quick look), NFC, GPS |
 | display, fingerprint sensor | other models / variants (see [requirements](docs/requirements.md)) |
 | ViPER4AndroidFX, OTA updates from an own server | long-term battery life |
 
@@ -71,7 +71,8 @@ On one Redmi Note 10 5G Global (M2103K19G), used **without a SIM card**, WLAN on
   (GenieZone/MTEE) cannot be set up, so the secure video decoder stops. Stock MIUI with the same
   firmware (and an unlocked bootloader) plays fine, so the cause is on the kernel side, not the
   firmware. Reported upstream / under investigation. **Workaround:** `WIDEVINE_L3=true` in
-  `config.env` forces Widevine L3 - Disney+ and similar apps then play, but only in SD.
+  `config.env` forces Widevine L3 - Disney+ and similar apps then play, but only in SD
+  (tested with crDroid 12.14: DRM Info shows L3, HDCP "None", Disney+ plays).
 - **Netflix** refuses the login. The app queries Google's Play Integrity, and a phone with an
   unlocked bootloader only passes *basic integrity*, not *device integrity* - this part affects
   practically every custom ROM.

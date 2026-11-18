@@ -48,10 +48,6 @@
   <project path="external/aac" name="LineageOS/android_external_aac" groups="pdk" remote="github" revision="lineage-23.2" />
   <remove-project path="external/tremolo" optional="true" />
   <project path="external/tremolo" name="LineageOS/android_external_tremolo" groups="pdk" remote="github" revision="lineage-23.2" />
-  <remove-project path="external/hplip" optional="true" />
-  <project path="external/hplip" name="LineageOS/android_external_hplip" groups="pdk" remote="github" revision="lineage-23.2" />
-  <remove-project path="hardware/broadcom/wlan" optional="true" />
-  <project path="hardware/broadcom/wlan" name="LineageOS/android_hardware_broadcom_wlan" groups="pdk,broadcom_wlan" remote="github" revision="lineage-23.2" />
 
   <!-- ViPER4AndroidFX (audio effects). Included by patches/device/0003-*, can be disabled
        with WITH_VIPER=false in config.env (the project is then synced but not built). -->

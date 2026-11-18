@@ -43,9 +43,10 @@ if (-not ((Distros) -contains $Name)) {
     }
 }
 
-# sparse disk: space freed inside Linux is given back to Windows
+# No sparse disk on purpose: it lost data on the author's machine after a hard WSL stop.
+# To give space back to Windows, compact the disk by hand (docs/troubleshooting.md).
 & wsl.exe --terminate $Name
-& wsl.exe --manage $Name --set-sparse true
+& wsl.exe --manage $Name --set-sparse false
 
 $ramGB = [math]::Floor((Get-CimInstance Win32_ComputerSystem).TotalPhysicalMemory / 1GB)
 $cpus = [Environment]::ProcessorCount
