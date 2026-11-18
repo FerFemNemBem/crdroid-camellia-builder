@@ -12,7 +12,7 @@ bash scripts/build-all.sh          # Windows: double-click scripts\windows\build
 > [!NOTE]
 > **After starting it, plan to wait about 4-7 hours** for the very first build: roughly 1-3 hours
 > for downloading the sources and 2-4 hours for building, depending on your PC and internet
-> connection (my PC with a 100 Mbit/s DSL line: about 5.5 hours in total, see
+> connection (my PC with a 100 Mbit/s DSL line: 5 h 17 min in total, see
 > [requirements](requirements.md#measured-on-my-pc)). You do not need to watch it - leave it running,
 > e.g. overnight. Later updates take only 15-60 minutes.
 >

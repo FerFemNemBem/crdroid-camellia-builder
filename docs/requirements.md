@@ -14,17 +14,21 @@ Other Linux distributions may work but are not tested.
 
 ### Measured on my PC
 
-16 CPU threads, 62 GB RAM (50 GB assigned to WSL2), SATA SSD, internet via a **100 Mbit/s DSL line**:
+16 CPU threads, 62 GB RAM (50 GB assigned to WSL2), SATA SSD, internet via a **100 Mbit/s DSL line**.
+Values from a complete run of `build-all.sh` on a fresh WSL distribution, following this guide (18.11.2026, crDroid 12.14):
 
 | step | time | disk space |
 |---|---|---|
-| first download of the sources (`04-sync.sh`) | 40-75 min (test run 18.11.2026: 42 min) | 125-150 GB |
-| first build with an empty compiler cache (`07-build.sh`) | 4 h 14 min | |
-| after the first build: sources + build output + cache | | about 280 GB |
-| later builds | 7-15 min | +1.3 GB per finished build in `OUTPUT_DIR` |
+| stock ROM + MindTheGapps download (`03-download.sh`) | 6 min | ~4 GB |
+| first download of the sources (`04-sync.sh`) | 42 min | 125-150 GB |
+| first build with an empty compiler cache (`07-build.sh`) | 4 h 25 min | |
+| **whole first run (`build-all.sh`)** | **5 h 17 min** | **about 270 GB** (sources + build output + cache) |
+| later builds | 7-15 min (cache warm) up to ~2 h (big crDroid update) | +1.3 GB per finished build in `OUTPUT_DIR` |
 
-Breakdown of the 280 GB: sources ~125 GB, build output (`out/`) ~125 GB, compiler cache 23 GB
-(grows up to `CCACHE_SIZE`, default 50 GB). Add ~4 GB of downloads. On a slower computer, a hard
+The finished ROM (ZIP) is about 1.3 GB.
+
+Breakdown of the 270 GB: sources ~125 GB, build output (`out/`) ~130 GB, compiler cache ~12 GB after
+the first build (grows with later builds up to `CCACHE_SIZE`, default 50 GB). Add ~4 GB of downloads. On a slower computer, a hard
 disk or a slower connection, multiply the times accordingly - and plan for 350-400 GB.
 
 ## Phone

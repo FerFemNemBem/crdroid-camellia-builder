@@ -98,9 +98,9 @@ SATA SSD, internet via a 100 Mbit/s DSL line):
 
 | | time | disk space |
 |---|---|---|
-| first download of the sources | 45-75 min | 125-150 GB |
-| first build, empty compiler cache | **4 h 14 min** | |
-| everything after the first build (sources, build output, cache) | | **about 280 GB** |
+| first download of the sources | 42 min | 125-150 GB |
+| first build, empty compiler cache | **4 h 25 min** | |
+| everything after the first build (sources, build output, cache) | | **about 270 GB** |
 | later builds (cache warm, few changes) | 7-15 min | +1.3 GB per finished build |
 
 So: plan for **350-400 GB of free disk space, a fast internet connection and a fast computer**.
@@ -117,7 +117,7 @@ optionally `config.env`) **one command does everything**:
 bash scripts/build-all.sh        # Windows: double-click scripts\windows\build-all.bat
 ```
 
-**Then wait about 4-7 hours** (first time; my PC: about 5.5 hours) - no need to watch it.
+**Then wait about 4-7 hours** (first time; my PC: 5 h 17 min) - no need to watch it.
 With the default test keys it asks nothing (with own keys: a backup passphrase at the start), then runs checks, downloads, sync, keys,
 preparation and build unattended for several hours inside tmux, with a status bar showing the
 current step, elapsed time and disk usage. Close the window any time - it keeps running; start it
