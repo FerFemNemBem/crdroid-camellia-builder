@@ -18,9 +18,10 @@ step by step, optionally signed with your own keys and with updates from your ow
 > [!TIP]
 > **Contributions are very welcome!** Ideas, test results from your phone (especially with a SIM card
 > or another model variant), bug reports, fixes and pull requests - anything that makes this project
-> better is appreciated, and so are discussions among users. I look into the repository
-> regularly and try to answer and include what comes in. Just do not rely on a quick reaction: this
-> is a hobby project without guaranteed support, so an answer may take a while.
+> better is appreciated, and so are discussions among users. I will try to look into the
+> repository every now and then and to answer and include what comes in. Just do not rely on a quick
+> reaction: this is a hobby project without guaranteed support, and there may be months in which I
+> do not look in at all - so an answer may take a while.
 
 ## Credits
 
