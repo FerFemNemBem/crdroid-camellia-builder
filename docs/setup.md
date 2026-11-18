@@ -47,12 +47,13 @@ distributions. When Ubuntu opens, choose a user name and password, then type `ex
 
 ### 4. Give WSL enough memory
 
-WSL only uses half of your RAM by default, which is too little. The script prints a recommendation;
+WSL only uses half of your RAM by default, which is too little for the build - but **Windows needs
+at least 16 GB for itself**. The script prints a recommendation (RAM minus 16 GB, at most 80 %);
 put it into `C:\Users\<you>\.wslconfig`, for example on a 64 GB PC:
 
 ```ini
 [wsl2]
-memory=52GB
+memory=46GB
 processors=16
 swap=16GB
 swapFile=D:\\WSL\\crdroid\\swap.vhdx
@@ -60,6 +61,14 @@ swapFile=D:\\WSL\\crdroid\\swap.vhdx
 
 Then run `wsl --shutdown` once. **This stops all running WSL distributions**, so save your work in
 them first. The settings apply to every distribution.
+
+> [!WARNING]
+> Do not give WSL more. During the build WSL uses everything it is allowed to. With 50 of 62 GB, my
+> Windows was left with almost no free memory, became unusable for minutes and finally the WSL VM
+> was stopped hard - files written shortly before were lost and the WSL disk was damaged (repair:
+> [troubleshooting.md](troubleshooting.md)). Also let Windows **manage the page file size
+> automatically** (*System -> About -> Advanced system settings -> Performance -> Settings ->
+> Advanced -> Virtual memory*) and keep **20+ GB free on drive C:** so it can grow when needed.
 
 ### 5. Install the build tools
 

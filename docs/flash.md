@@ -110,10 +110,25 @@ camellia has no anti-rollback protection, so switching between MIUI 14 versions 
 - if the phone is signed into a Google account: **remove the account** in the phone's settings first,
   otherwise the factory reset protection may ask for it after formatting
 - battery charged to at least 50 %
-- open the terminal / PowerShell **in the build folder** (e.g. `D:\crdroid\builds\20261116-1200`),
-  so the file names below work as they are
+- open the terminal / PowerShell **in the build folder**, so the commands below work as they are.
+  The folder is `<OUTPUT_DIR>/builds/<date>-<time>`, the Google apps are in `<OUTPUT_DIR>/downloads`.
+  Example with `OUTPUT_DIR="/mnt/d/crdroid"`:
+
+  ```powershell
+  cd D:\crdroid\builds\20261118-1919          # Windows (PowerShell)
+  ```
+  ```bash
+  cd /mnt/d/crdroid/builds/20261118-1919         # Linux / WSL path of the same folder
+  ```
+
+> [!TIP]
+> Only want the ready-made example build from the Releases page? Follow
+> [install-example.md](install-example.md) instead - it covers everything from unlocking the bootloader.
 
 ## First installation
+
+Two different tools are used: **`boot.img` is flashed with `fastboot`** (step 1), the **ZIP files
+are installed with `adb sideload`** from the recovery (steps 3 and 4). Do not sideload `boot.img`.
 
 1. Reboot into the bootloader and flash the boot image (it contains the recovery):
 
@@ -129,8 +144,9 @@ camellia has no anti-rollback protection, so switching between MIUI 14 versions 
 3. **Apply update -> Apply from ADB**, then on the PC:
 
    ```
-   adb sideload crDroidAndroid-16.0-<date>-camellia-v12.xx.zip
+   adb sideload crDroidAndroid-16.0-20261118-camellia-v12.14.zip
    ```
+   (use the exact file name from your build folder - the `Tab` key completes it)
 
    The PC may stop at **47 %** and report an error or success - both are normal; the phone shows
    whether the installation finished. A warning that the package "will downgrade your system" can
@@ -139,13 +155,18 @@ camellia has no anti-rollback protection, so switching between MIUI 14 versions 
    to the other slot), then **Apply update -> Apply from ADB** and
 
    ```
-   adb sideload MindTheGapps-16.0.0-arm64-<date>.zip
+   adb sideload ../../downloads/MindTheGapps-16.0.0-arm64-20261023_034858.zip
    ```
 
-   `03-download.sh` already downloaded it to `$OUTPUT_DIR/downloads/` (default `WITH_GAPPS=true`).
+   `03-download.sh` already downloaded it to `<OUTPUT_DIR>/downloads/` (default `WITH_GAPPS=true`);
+   `../../downloads/` points there from the build folder (works in PowerShell and Linux). Again,
+   use your exact file name.
 
    If the recovery warns about a signature, confirm with *Yes*.
 5. **Reboot system now**. The first start takes a few minutes.
+
+Without an own OTA server (`OTA_URL` empty) the updater later says *"The update check failed"* -
+that is expected: camellia has no official crDroid builds, so there is nothing to check against.
 
 ## Updating later
 

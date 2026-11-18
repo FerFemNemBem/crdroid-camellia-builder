@@ -50,7 +50,10 @@ if (-not ((Distros) -contains $Name)) {
 
 $ramGB = [math]::Floor((Get-CimInstance Win32_ComputerSystem).TotalPhysicalMemory / 1GB)
 $cpus = [Environment]::ProcessorCount
-$memGB = [math]::Floor($ramGB * 0.8)
+# Leave Windows at least 16 GB (and never give WSL more than 80 %): with less, Windows runs out of
+# memory during the build, becomes unusable and may kill the WSL VM (lost writes, damaged disk).
+$memGB = [math]::Min([math]::Floor($ramGB * 0.8), $ramGB - 16)
+if ($memGB -lt 16) { $memGB = [math]::Floor($ramGB * 0.5) }
 $cfg = Join-Path $env:USERPROFILE '.wslconfig'
 Write-Host ''
 Write-Host "=== Your current $cfg ===" -ForegroundColor Green
@@ -63,6 +66,8 @@ Write-Host "  processors=$cpus"
 Write-Host '  swap=16GB'
 Write-Host '  swapFile=' -NoNewline; Write-Host ((Join-Path $Location 'swap.vhdx') -replace '\\', '\\')
 Write-Host 'After changing .wslconfig run  wsl --shutdown  once (this stops ALL distributions).' -ForegroundColor Yellow
+Write-Host 'Also let Windows manage the size of its page file (System > About > Advanced system settings >' -ForegroundColor Yellow
+Write-Host 'Performance > Advanced > Virtual memory) and keep 20+ GB free on drive C: - see docs/setup.md.' -ForegroundColor Yellow
 Write-Host ''
 & wsl.exe -l -v
 Write-Host "Next: open the distribution with  wsl -d $Name  and follow docs/setup.md" -ForegroundColor Cyan

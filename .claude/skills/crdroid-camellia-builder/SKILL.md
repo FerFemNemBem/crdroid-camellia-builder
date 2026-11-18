@@ -92,6 +92,11 @@ Only after a build was installed and tested on a phone:
 3. `bash scripts/dev/privacy-check.sh`, commit, `git tag -a vX.Y -m "..."`, `git push --follow-tags`.
 4. Check: `bash scripts/04-sync.sh --known-good vX.Y` must sync without the local manifest
    (the pinned file already contains those projects).
+5. Optional example build (as for v1.0): a build with the defaults (`SIGNING=test`), installed and
+   tested on the phone. Release assets: ROM ZIP, its `boot.img`, `sha256sums.txt`, `source-state.xml`,
+   `build-info.txt` - never GApps, never keys. Release notes: version, patch level, settings,
+   kernel source commit (GPL; from `source-state.xml`), "no regular updates". Update the file
+   names in `docs/install-example.md` and the README section "Just want to try it?".
 
 ## 6. Android 17 watch fired
 

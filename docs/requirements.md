@@ -51,16 +51,16 @@ not supported by this device tree.
 
 **Recommended: MIUI V14.0.6.0 Global**, the version the vendor files of the build are extracted
 from - firmware and vendor files then match. How to put it on the phone:
-[flash.md -> Firmware](flash.md#firmware-miui-1406-global). My phone first ran the EEA V14.0.4.0
+[flash.md -> Firmware](flash.md#firmware-miui-14060-global). My phone first ran the EEA V14.0.4.0
 firmware - crDroid booted and worked with it too. I then switched to V14.0.6.0 Global, which my
 current builds run on. Other MIUI 14 versions should also work, but I have not tried them.
 
 ### Unlocked bootloader
 
 The bootloader must be unlocked. Xiaomi does this with its official **Mi Unlock** tool and a Xiaomi
-account; depending on the account there is a waiting period of several days. This project does not
-cover unlocking - search for a current guide for your model (XDA forums, the device's Telegram
-groups).
+account; depending on the account there is a waiting period of several days (for me: 7 days).
+Step by step, for Windows (official) and with hints for Linux:
+[install-example.md -> Unlock the bootloader](install-example.md#2-unlock-the-bootloader).
 
 > [!CAUTION]
 > **Never re-lock the bootloader** while a custom ROM is installed. On this phone that leads to a

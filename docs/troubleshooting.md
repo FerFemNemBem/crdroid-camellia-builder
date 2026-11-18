@@ -134,6 +134,10 @@ and run the step again. The build itself does not depend on it: all patches are 
 
 **Sideload stops at 47 %** - normal. The phone shows the real result.
 
+**Updater says "The update check failed. Try again later"** - normal without an own OTA server
+(`OTA_URL` empty, also in the example build): there are no official crDroid builds for camellia.
+Update by sideloading, see [flash.md](flash.md#updating-later).
+
 **Updater finds nothing** - the installed build is the newest (expected), `os_sdk_level` is missing
 in the JSON (use `08-publish.sh`), the URL in the build differs from `OTA_URL` (build and install
 once more), or the phone cannot reach the server (open the JSON URL in the phone's browser).

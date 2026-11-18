@@ -23,6 +23,21 @@ step by step, optionally signed with your own keys and with updates from your ow
 > reaction: this is a hobby project without guaranteed support, and there may be months in which I
 > do not look in at all - so an answer may take a while.
 
+## Just want to try it? There is a ready-made example build
+
+If you want to see what this guide produces before spending hours on building, take the
+**example build** from the [Releases](https://github.com/FerFemNemBem/crdroid-camellia-builder/releases)
+page: crDroid 12.14 (Android 16, security patch November 2026), built exactly with this guide and
+the default settings (test keys, ViPER4AndroidFX, Widevine L3), installed and tested on my phone.
+
+**Complete installation guide - from unlocking the bootloader to the first start, for Windows and
+Linux: [docs/install-example.md](docs/install-example.md)**
+
+> [!IMPORTANT]
+> The example build is a **snapshot to try things out**. It will **not get regular updates** - for
+> current security patches, build it yourself with this repository (switching from the example
+> build to your own build with test keys works without erasing your data).
+
 ## Credits
 
 This project stands on the shoulders of others - without their work it would not exist:
@@ -57,9 +72,9 @@ look at fieldmar's releases: <https://github.com/fieldmar/android_device_xiaomi_
 - optional: OTA updates from **your own web server** through the built-in crDroid updater
 - one command (or one double-click on Windows) to check for upstream changes and rebuild
 
-What you do **not** get: a ready-made ROM. This repository only contains scripts, a manifest and
-patches. All source code, the proprietary vendor files and the optional Google apps are downloaded
-from their original sources while you build.
+This repository itself only contains scripts, a manifest and patches. All source code, the
+proprietary vendor files and the optional Google apps are downloaded from their original sources
+while you build. The only ready-made ROM is the example build mentioned above.
 
 ## What has been tested
 
@@ -68,9 +83,10 @@ On my own Redmi Note 10 5G Global (M2103K19G), which I use **without a SIM card*
 | Works | Not tested |
 |---|---|
 | WLAN, Bluetooth audio (pairing, music, pause/resume) | phone calls, SMS, mobile data, VoLTE, dual SIM |
-| audio, local video playback, Spotify, Disney+ (in SD, see below) | camera (beyond a quick look), NFC, GPS |
-| display, fingerprint sensor | other models / variants (see [requirements](docs/requirements.md)) |
-| ViPER4AndroidFX, OTA updates from an own server | long-term battery life |
+| speaker, volume keys, local video, YouTube, Spotify, Disney+ (in SD, see below) | wired headphones, NFC (my model has none) |
+| camera (rear photo and video with sound, front photo), GPS | other models / variants (see [requirements](docs/requirements.md)) |
+| display (brightness, auto brightness, rotation, refresh rate), fingerprint sensor, charging | long-term battery life, hotspot |
+| Google account and Play Store (MindTheGapps), ViPER4AndroidFX, OTA updates from an own server | |
 
 **Known problems:**
 - **Widevine L1 / HD streaming**: with Widevine L1, Disney+ refuses playback ("something went wrong"): the licence is obtained (Widevine L1 works,
@@ -152,7 +168,8 @@ On Windows, start with [docs/setup.md](docs/setup.md) (creating the WSL distribu
 | [requirements.md](docs/requirements.md) | hardware, phone models, firmware, bootloader |
 | [setup.md](docs/setup.md) | preparing Ubuntu or WSL2 |
 | [build.md](docs/build.md) | the build, step by step |
-| [flash.md](docs/flash.md) | installing the ROM, GApps, rescue |
+| [install-example.md](docs/install-example.md) | installing the ready-made example build - complete, for beginners |
+| [flash.md](docs/flash.md) | installing your own build, GApps, updates, rescue |
 | [updates.md](docs/updates.md) | staying up to date, known-good states |
 | [signing.md](docs/signing.md) | own keys vs. test keys, backups |
 | [ota-server.md](docs/ota-server.md) | optional: updates from your own server |
