@@ -42,10 +42,14 @@ Find your model number in *Settings -> About phone -> All specs* or on the box. 
 
 ### Firmware
 
-The phone must run **MIUI 14 firmware (Android 13)**, e.g. V14.0.x for your region. The custom ROM
-only replaces the system; modem, bootloader and other firmware stay as they are. If your phone is on
-an older MIUI version, update it with Xiaomi's official tools first. Do not install HyperOS
-firmware - it is not supported by this device tree.
+The phone must run **MIUI 14 firmware (Android 13)**. The custom ROM only replaces the system;
+modem, bootloader, TEE and other firmware stay as they are. Do not install HyperOS firmware - it is
+not supported by this device tree.
+
+**Recommended: MIUI V14.0.6.0 Global**, the version the vendor files of the build are extracted
+from - firmware and vendor files then match. How to put it on the phone:
+[flash.md -> Firmware](flash.md#firmware-miui-1406-global). Other MIUI 14 versions (e.g. EEA
+V14.0.4.0) boot and work too, but are less tested.
 
 ### Unlocked bootloader
 

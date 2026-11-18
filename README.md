@@ -68,7 +68,9 @@ On one Redmi Note 10 5G Global (M2103K19G), used **without a SIM card**, WLAN on
 **Known problems:**
 - **Disney+** refuses playback ("something went wrong"): the licence is obtained (Widevine L1 works,
   HDCP 2.3), but the MediaTek *secure video path* fails - the protected memory in the TEE
-  (GenieZone/MTEE) cannot be set up, so the secure video decoder stops. Under investigation.
+  (GenieZone/MTEE) cannot be set up, so the secure video decoder stops. Stock MIUI with the same
+  firmware (and an unlocked bootloader) plays fine, so the cause is on the kernel side, not the
+  firmware. Reported upstream / under investigation.
 - **Netflix** refuses the login. The app queries Google's Play Integrity, and a phone with an
   unlocked bootloader only passes *basic integrity*, not *device integrity* - this part affects
   practically every custom ROM.

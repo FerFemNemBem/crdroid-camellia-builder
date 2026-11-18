@@ -65,6 +65,44 @@ Unplug and replug the phone after installing the udev rules.
    Confirm the prompt on the phone ("Allow USB debugging?"). The device must be listed as `device`
    (not `unauthorized`).
 
+## Firmware: MIUI 14.0.6.0 Global
+
+Recommended once before the first installation (see [requirements.md](requirements.md#firmware)).
+It flashes the complete stock MIUI and **erases everything** on the phone; the bootloader stays
+unlocked.
+
+1. Download the official fastboot ROM (5.7 GB):
+   `camellian_global_images_V14.0.6.0.TKSMIXM_20230919.0000.00_13.0_global_f43e2310b3.tgz`
+   from a Xiaomi mirror, for example
+   `https://bkt-sgp-miui-ota-update-alisgp.oss-ap-southeast-1.aliyuncs.com/V14.0.6.0.TKSMIXM/<file name>`
+   (alternatives: `cdnorg.d.miui.com`, `bigota.d.miui.com` - speeds differ a lot, try another one if
+   it crawls). The MD5 checksum must start with `f43e2310b3` (the part in the file name).
+2. Unpack it, e.g. in PowerShell: `tar -xf camellian_global_images_V14.0.6.0*.tgz`.
+3. Bring the phone into fastboot mode. If Android with USB debugging is running (any ROM):
+   `adb reboot bootloader` - otherwise power off and hold *Volume down + Power*. Check with
+   `fastboot devices`.
+4. Flash. Xiaomi's `flash_all.bat` ends with a reboot into MIUI; without that last line the phone
+   stays in fastboot mode and you can continue with the first installation right away - no MIUI
+   start, no buttons. In PowerShell, in the unpacked folder:
+
+   ```powershell
+   (Get-Content flash_all.bat) | Where-Object { $_ -notmatch '^fastboot %\* reboot' } | Set-Content flash_all_noreboot.bat
+   Select-String -Path flash_all_noreboot.bat -Pattern 'reboot|lock'    # must print NOTHING
+   .\flash_all_noreboot.bat
+   ```
+
+   (Linux: run `flash_all.sh` without its last `reboot` line the same way.)
+   > [!CAUTION]
+   > **Never `flash_all_lock.bat`** - it re-locks the bootloader. Mi Flash: only "clean all",
+   > never "clean all and lock".
+5. Takes 5-10 minutes. The phone stays in fastboot mode: continue with
+   [First installation](#first-installation), step 1, **from `fastboot flash boot boot.img`** on
+   (it is already in the bootloader). If you used the original `flash_all.bat`, the phone starts
+   MIUI instead (the first start is slow); then use the buttons to get back into fastboot mode,
+   because fresh MIUI has USB debugging switched off.
+
+camellia has no anti-rollback protection, so switching between MIUI 14 versions is safe.
+
 ## Before you start
 
 - bootloader unlocked, MIUI 14 firmware on the phone ([requirements.md](requirements.md))
@@ -85,7 +123,8 @@ Unplug and replug the phone after installing the udev rules.
    fastboot reboot recovery
    ```
 
-   (Or: power off, hold *Volume down + Power* for fastboot mode.)
+   `adb reboot bootloader` needs USB debugging in the running system. Without it (fresh MIUI, a
+   phone that does not boot): power off, hold *Volume down + Power* for fastboot mode.
 2. In the recovery: **Factory reset -> Format data / factory reset**, confirm.
 3. **Apply update -> Apply from ADB**, then on the PC:
 
