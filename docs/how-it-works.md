@@ -31,7 +31,7 @@ Applied by `scripts/06-prepare.sh`, idempotently (already applied ones are detec
 | `0001-camellia-disable-ViLTE-...` | by fieldmar (pull request #7): disables ViLTE so that the modem brings up IMS - fixes VoLTE |
 | `0002-camellia-ship-the-gold-connectivity-firmware` | by fieldmar (pull request #8): restores the "gold" Bluetooth/Wi-Fi firmware set (chosen by Sushrut1101 of dm700-devs in 2023 and shipped by crDroid 14, lost in the move to Android 16); fixes music dropping after a pause and the silent headset microphone |
 | `0003-camellia-include-ViPER4AndroidFX` | builds ViPER, registers its audio effect, SELinux `execmem` for the audio HAL; skipped with `WITH_VIPER=false` |
-| `0004-camellia-leave-out-liboemcrypto-Widevine-L3` | optional (`WIDEVINE_L3=true`): leaves `liboemcrypto.so` out of the vendor files, so Widevine cannot reach the TEE and falls back to L3. DRM video apps then use the normal decoder instead of the broken secure one and play in SD |
+| `0004-camellia-leave-out-liboemcrypto-Widevine-L3` | on by default (`WIDEVINE_L3=true`, switch off with `false`): leaves `liboemcrypto.so` out of the vendor files, so Widevine cannot reach the TEE and falls back to L3. DRM video apps then use the normal decoder instead of the broken secure one and play in SD |
 
 Optional patches follow their switch in both directions: switching one off and running
 `06-prepare.sh` again removes it from the device tree (a commit "Remove: ...").

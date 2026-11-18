@@ -117,7 +117,7 @@ SELinux domain.
 
 **Disney+ (or another DRM video app) shows "something went wrong" when playing** - the MediaTek
 secure video path does not work with the source-built kernel (details in the README, "Known
-problems"). Workaround: set `WIDEVINE_L3=true` in `config.env`, rebuild and install the update.
+problems"). Check that `WIDEVINE_L3=true` (the default) in `config.env`, rebuild and install the update.
 Widevine then reports L3 (check with the app *DRM Info*) and videos play in SD. Some apps remember
 the old security level - clear their app data once. Expected in *DRM Info*: Security Level L3, a different
 system ID, Max HDCP Level "None". Set it back to `false` when the kernel is fixed.
