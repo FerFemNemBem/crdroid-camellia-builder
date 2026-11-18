@@ -62,7 +62,7 @@ detach vdisk
 exit
 ```
 `compact vdisk` takes up to half an hour for a large disk. diskpart refuses sparse files ("must not be
-set as sparse"), hence switching it off first. **Leave sparse switched off afterwards**: the author's
+set as sparse"), hence switching it off first. **Leave sparse switched off afterwards**: my
 disk was damaged shortly after switching it back on (see the next entry), and Microsoft itself had
 disabled sparse disks for a while because of data loss. Compact by hand when needed instead.
 

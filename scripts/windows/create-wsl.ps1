@@ -43,7 +43,7 @@ if (-not ((Distros) -contains $Name)) {
     }
 }
 
-# No sparse disk on purpose: it lost data on the author's machine after a hard WSL stop.
+# No sparse disk on purpose: it lost data on my machine after a hard WSL stop.
 # To give space back to Windows, compact the disk by hand (docs/troubleshooting.md).
 & wsl.exe --terminate $Name
 & wsl.exe --manage $Name --set-sparse false

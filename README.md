@@ -9,14 +9,18 @@ step by step, optionally signed with your own keys and with updates from your ow
 > Flashing a custom ROM can erase all your data and, if something goes wrong, can leave your phone
 > unable to boot. You alone are responsible for your device.
 >
-> This project is meant as a **test base for your own builds and experiments**. The author does
-> **not** use the phone as a daily driver - only as a test device.
+> This project is meant as a **test base for your own builds and experiments**. I do **not** use
+> the phone as a daily driver - only as a test device.
 >
 > This project has only been tested **rudimentarily, on a single phone (M2103K19G) without a SIM card**.
-> See [What has been tested](#what-has-been-tested). There is **no guaranteed support**: the author
-> looks into the repository from time to time and tries to answer questions, issues and pull
-> requests, but there is no promise that this happens quickly. Discussions among users
-> are welcome, and so are pull requests.
+> See [What has been tested](#what-has-been-tested).
+
+> [!TIP]
+> **Contributions are very welcome!** Ideas, test results from your phone (especially with a SIM card
+> or another model variant), bug reports, fixes and pull requests - anything that makes this project
+> better is appreciated, and so are discussions among users. I look into the repository
+> regularly and try to answer and include what comes in. Just do not rely on a quick reaction: this
+> is a hobby project without guaranteed support, so an answer may take a while.
 
 ## Credits
 
@@ -41,7 +45,7 @@ If you only want a ready LineageOS build with these fixes rather than building c
 look at fieldmar's releases: <https://github.com/fieldmar/android_device_xiaomi_camellia/releases>.
 
 > [!NOTE]
-> This project was created together with **Claude**, an AI assistant by Anthropic - from finding the
+> I created this project together with **Claude**, an AI assistant by Anthropic - from finding the
 > required fixes to writing the scripts and this documentation. Commits carry a `Co-Authored-By: Claude` line.
 
 ## What you get
@@ -88,8 +92,8 @@ On one Redmi Note 10 5G Global (M2103K19G), used **without a SIM card**, WLAN on
 - a phone with an **unlocked bootloader** and **MIUI 14 firmware**
 - patience: the first download takes 1-3 hours, the first build 2-4 hours
 
-**For reference, the author's numbers** (one PC: 16 threads, 62 GB RAM of which 50 GB for WSL2,
-SATA SSD, a 250-400 Mbit/s download rate during the sync):
+**For reference, my numbers** (one PC: 16 threads, 62 GB RAM of which 50 GB for WSL2,
+SATA SSD, internet via a 100 Mbit/s DSL line):
 
 | | time | disk space |
 |---|---|---|
@@ -112,7 +116,7 @@ optionally `config.env`) **one command does everything**:
 bash scripts/build-all.sh        # Windows: double-click scripts\windows\build-all.bat
 ```
 
-**Then wait about 4-7 hours** (first time; author's PC: about 5.5 hours) - no need to watch it.
+**Then wait about 4-7 hours** (first time; my PC: about 5.5 hours) - no need to watch it.
 With the default test keys it asks nothing (with own keys: a backup passphrase at the start), then runs checks, downloads, sync, keys,
 preparation and build unattended for several hours inside tmux, with a status bar showing the
 current step, elapsed time and disk usage. Close the window any time - it keeps running; start it

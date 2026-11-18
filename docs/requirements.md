@@ -12,14 +12,13 @@
 
 Other Linux distributions may work but are not tested.
 
-### Measured on the author's PC
+### Measured on my PC
 
-16 CPU threads, 62 GB RAM (50 GB assigned to WSL2), SATA SSD, sync running at
-roughly 250-400 Mbit/s:
+16 CPU threads, 62 GB RAM (50 GB assigned to WSL2), SATA SSD, internet via a **100 Mbit/s DSL line**:
 
 | step | time | disk space |
 |---|---|---|
-| first download of the sources (`04-sync.sh`) | 45-75 min | 125-150 GB |
+| first download of the sources (`04-sync.sh`) | 40-75 min (test run 18.11.2026: 42 min) | 125-150 GB |
 | first build with an empty compiler cache (`07-build.sh`) | 4 h 14 min | |
 | after the first build: sources + build output + cache | | about 280 GB |
 | later builds | 7-15 min | +1.3 GB per finished build in `OUTPUT_DIR` |
