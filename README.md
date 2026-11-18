@@ -13,8 +13,10 @@ step by step, optionally signed with your own keys and with updates from your ow
 > **not** use the phone as a daily driver - only as a test device.
 >
 > This project has only been tested **rudimentarily, on a single phone (M2103K19G) without a SIM card**.
-> See [What has been tested](#what-has-been-tested). There is **no support** - please do not expect
-> answers to questions or issues. Discussions among users are welcome.
+> See [What has been tested](#what-has-been-tested). There is **no guaranteed support**: the author
+> looks into the repository from time to time and tries to answer questions, issues and pull
+> requests, but there is no promise that this happens quickly. Discussions among users
+> are welcome, and so are pull requests.
 
 ## Credits
 
