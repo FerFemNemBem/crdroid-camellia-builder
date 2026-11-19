@@ -33,7 +33,7 @@
        NeuralNetworks, keymint, aac, tremolo, hplip, broadcom wlan) with the LineageOS forks, because
        crDroid still used the plain AOSP versions. Since crDroid 12.14 (2026-11-18) crDroid's own
        manifest uses those LineageOS forks, so the replacements were dropped. If it is ever needed
-       again: <remove-project path="..." optional="true" /> plus a <project> with the fork. -->
+       again: a remove-project element (by path, optional=true) plus a project element with the fork. -->
 
   <!-- ViPER4AndroidFX (audio effects). Included by patches/device/0003-*, can be disabled
        with WITH_VIPER=false in config.env (the project is then synced but not built). -->
