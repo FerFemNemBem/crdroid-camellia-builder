@@ -138,6 +138,14 @@ and run the step again. The build itself does not depend on it: all patches are 
 (`OTA_URL` empty, also in the example build): there are no official crDroid builds for camellia.
 Update by sideloading, see [flash.md](flash.md#updating-later).
 
+**`08-publish.sh` cannot reach the OTA server by name, although `ping` to its IP works** - a VPN on
+the build PC often blocks DNS requests to the home router (WSL uses Windows' DNS settings). Check with
+`nslookup <server name> <router IP>`; disconnect the VPN for the upload and run `scripts/08-publish.sh`
+again - no rebuild needed. The phone is not affected, it asks the router itself.
+
+**OTA download on the phone is slow** - the updater of crDroid 12.14 and later downloads over several
+connections at once (setting in the updater); older updaters use one connection.
+
 **Updater finds nothing** - the installed build is the newest (expected), `os_sdk_level` is missing
 in the JSON (use `08-publish.sh`), the URL in the build differs from `OTA_URL` (build and install
 once more), or the phone cannot reach the server (open the JSON URL in the phone's browser).
