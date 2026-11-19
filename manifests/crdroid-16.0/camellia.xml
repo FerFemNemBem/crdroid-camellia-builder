@@ -29,25 +29,11 @@
            remote="aosp" revision="refs/tags/android-12.1.0_r27"
            clone-depth="1" />
 
-  <!-- crDroid 16.0 still uses the plain AOSP versions of these projects, while LineageOS 23.2
-       carries its own forks (including security fixes). Without the CellBroadcastService fork the
-       build fails (missing CellBroadcastMetrics constants). State: 2026-11-14.
-       Removed by path with optional="true", so this keeps working once crDroid forks them itself.
-       scripts/update.sh reports when crDroid no longer uses the AOSP version of one of them. -->
-  <remove-project path="packages/modules/CellBroadcastService" optional="true" />
-  <project path="packages/modules/CellBroadcastService" name="LineageOS/android_packages_modules_CellBroadcastService" groups="pdk" remote="github" revision="lineage-23.2" />
-  <remove-project path="packages/modules/Telephony" optional="true" />
-  <project path="packages/modules/Telephony" name="LineageOS/android_packages_modules_Telephony" groups="pdk-cw-fs,pdk-fs" remote="github" revision="lineage-23.2" />
-  <remove-project path="packages/services/Iwlan" optional="true" />
-  <project path="packages/services/Iwlan" name="LineageOS/android_packages_services_Iwlan" groups="pdk-cw-fs,pdk-fs" remote="github" revision="lineage-23.2" />
-  <remove-project path="packages/modules/NeuralNetworks" optional="true" />
-  <project path="packages/modules/NeuralNetworks" name="LineageOS/android_packages_modules_NeuralNetworks" groups="pdk-cw-fs,pdk-fs" remote="github" revision="lineage-23.2" />
-  <remove-project path="system/keymint" optional="true" />
-  <project path="system/keymint" name="LineageOS/android_system_keymint" groups="pdk" remote="github" revision="lineage-23.2" />
-  <remove-project path="external/aac" optional="true" />
-  <project path="external/aac" name="LineageOS/android_external_aac" groups="pdk" remote="github" revision="lineage-23.2" />
-  <remove-project path="external/tremolo" optional="true" />
-  <project path="external/tremolo" name="LineageOS/android_external_tremolo" groups="pdk" remote="github" revision="lineage-23.2" />
+  <!-- Until crDroid 12.13 this file replaced 9 projects (CellBroadcastService, Telephony, Iwlan,
+       NeuralNetworks, keymint, aac, tremolo, hplip, broadcom wlan) with the LineageOS forks, because
+       crDroid still used the plain AOSP versions. Since crDroid 12.14 (2026-11-18) crDroid's own
+       manifest uses those LineageOS forks, so the replacements were dropped. If it is ever needed
+       again: <remove-project path="..." optional="true" /> plus a <project> with the fork. -->
 
   <!-- ViPER4AndroidFX (audio effects). Included by patches/device/0003-*, can be disabled
        with WITH_VIPER=false in config.env (the project is then synced but not built). -->

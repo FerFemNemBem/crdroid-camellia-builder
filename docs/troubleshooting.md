@@ -37,9 +37,9 @@ removed before extraction); run `06-prepare.sh` again.
 **Killed / out of memory / the PC freezes** - not enough RAM. On WSL raise `memory=` and `swap=`
 in `.wslconfig` (then `wsl --shutdown`), or lower `JOBS` in `config.env`.
 
-**Build fails in `CellBroadcastReceiver` (CellBroadcastMetrics constants missing)** - the LineageOS
-CellBroadcastService fork is missing; make sure `.repo/local_manifests/camellia.xml` is the one from
-this repository and sync again.
+**Build fails in `CellBroadcastReceiver` (CellBroadcastMetrics constants missing)** - the AOSP
+CellBroadcastService is used instead of the LineageOS fork. crDroid uses the fork since 12.14; with an
+older crDroid state (e.g. an old known-good tag) sync again with the current manifest of this repository.
 
 **Disk full** - the tree needs ~300 GB.
 

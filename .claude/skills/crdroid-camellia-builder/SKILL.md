@@ -33,7 +33,7 @@ First questions when helping: which step failed, the last ~50 lines of `$LOG_DIR
 | symptom | cause | fix |
 |---|---|---|
 | sync: `429` / `RESOURCE_EXHAUSTED` | server rate limit | retry loop handles it; lower `SYNC_JOBS` |
-| build: CellBroadcastReceiver, missing `CellBroadcastMetrics` constants | crDroid still uses AOSP CellBroadcastService, LineageOS fork needed | the `remove-project`/`project` pairs in the local manifest; make sure the current local manifest is in `.repo/local_manifests/` and sync |
+| build: CellBroadcastReceiver, missing `CellBroadcastMetrics` constants | AOSP CellBroadcastService instead of the LineageOS fork (crDroid before 12.14) | crDroid >= 12.14 ships the fork; the local manifest no longer replaces it (removed 2026-11-19). If it ever comes back: `remove-project` (path, `optional="true"`) + `project` with the fork in the local manifest |
 | prepare B: connectivity patch does not apply | crDroid already relaxed the 4.19/5.4 checks | `patches/crdroid-16.0/connectivity_android16_on_kernel414.patch` replaces it (same file name = replacement) |
 | `wifi.cfg: SapCheckPmkidInDriver Nx` | extract-utils restores the already fixed pinned file and re-applies the fixup | `06` deletes `wifi.cfg` before extracting; count must be 1 |
 | a check reports "not found" although the commit is there | `git log | grep -q` + `pipefail` = SIGPIPE | use `grep -xF ... >/dev/null`, never `grep -q` at the end of a pipe |

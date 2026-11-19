@@ -12,7 +12,7 @@ bash scripts/update.sh
 Changes nothing. It compares your source tree with GitHub and prints, for every watched repository,
 `=` (unchanged) or `NEW` with a link that shows exactly the new commits. Watched are the most
 important crDroid repositories (manifest, version, build system, framework, settings, updater) and
-every GitHub project of the local manifest (device tree, kernel, modules, LineageOS forks, ViPER).
+every GitHub project of the local manifest (device tree, kernel, modules, ViPER).
 Additionally it shows
 
 - the crDroid version on GitHub vs. yours (e.g. `12.13` -> `12.14`)

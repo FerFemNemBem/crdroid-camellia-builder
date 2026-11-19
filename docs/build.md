@@ -68,7 +68,7 @@ bash scripts/04-sync.sh
 ```
 
 Initializes crDroid 16.0 and adds the camellia parts from `manifests/crdroid-16.0/camellia.xml`
-(device tree, kernel, LineageOS forks, ViPER). About 150 GB, 1-3 hours. If it stops with
+(device tree, kernel, MediaTek/Xiaomi parts, ViPER). About 150 GB, 1-3 hours. If it stops with
 `429` / `RESOURCE_EXHAUSTED` errors, the servers are rate limiting: the script waits and retries by
 itself; you can also lower `SYNC_JOBS`. Interrupting with Ctrl+C and starting again is safe.
 
