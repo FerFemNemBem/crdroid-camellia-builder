@@ -48,7 +48,7 @@ This project stands on the shoulders of others - without their work it would not
   Android 16 run on the 4.14 kernel, one build for all models, hardware fixes, kernel and kernel modules
 - **Sushrut1101** (dm700-devs) - chose the "gold" connectivity firmware back in 2023
 - **[fieldmar](https://github.com/fieldmar/android_device_xiaomi_camellia)** - the VoLTE fix and
-  restoring the gold firmware, which also fixes the Bluetooth headset microphone
+  restoring the gold firmware, which also fixes the Bluetooth headset microphone, and the hotspot repeater mode
 - **MiCode** (Xiaomi) - the camellia kernel source drop
 - **[crDroid](https://github.com/crdroidandroid)** and **[LineageOS](https://github.com/LineageOS)** -
   the ROM itself
@@ -69,6 +69,7 @@ look at fieldmar's releases: <https://github.com/fieldmar/android_device_xiaomi_
 - crDroid 12.x (Android 16, based on LineageOS 23.2), built from source on your own computer
 - signed with the public test keys (default, nothing to manage) or with **your own release keys** (one setting, recommended for daily use)
 - optional: **ViPER4AndroidFX** audio effects (on by default)
+- optional: **hotspot as a repeater** - Wi-Fi stays connected and is shared (`HOTSPOT_REPEATER`, off by default; works best when the phone is on a 2.4 GHz network)
 - optional: OTA updates from **your own web server** through the built-in crDroid updater
 - one command (or one double-click on Windows) to check for upstream changes and rebuild
 

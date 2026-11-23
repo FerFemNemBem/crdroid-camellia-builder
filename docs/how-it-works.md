@@ -36,6 +36,7 @@ Applied by `scripts/06-prepare.sh`, idempotently (already applied ones are detec
 | `0002-camellia-ship-the-gold-connectivity-firmware` | by fieldmar (pull request #8): restores the "gold" Bluetooth/Wi-Fi firmware set (chosen by Sushrut1101 of dm700-devs in 2023 and shipped by crDroid 14, lost in the move to Android 16); fixes music dropping after a pause and the silent headset microphone |
 | `0003-camellia-include-ViPER4AndroidFX` | builds ViPER, registers its audio effect, SELinux `execmem` for the audio HAL; skipped with `WITH_VIPER=false` |
 | `0004-camellia-leave-out-liboemcrypto-Widevine-L3` | on by default (`WIDEVINE_L3=true`, switch off with `false`): leaves `liboemcrypto.so` out of the vendor files, so Widevine cannot reach the TEE and falls back to L3. DRM video apps then use the normal decoder instead of the broken secure one and play in SD |
+| `0005-camellia-let-the-hotspot-share-a-Wi-Fi-connection` | by fieldmar: optional (`HOTSPOT_REPEATER=true`): advertises one Wi-Fi chip mode with station + access point (`WIFI_HIDL_FEATURE_DUAL_INTERFACE`) so turning the hotspot on no longer turns Wi-Fi off - the phone shares its Wi-Fi connection (repeater). The chip is then powered through the driver-state path. Hotspot on 2.4 GHz only - connect the phone itself to a 2.4 GHz network too, otherwise the single radio keeps switching bands and the speed collapses |
 
 Optional patches follow their switch in both directions: switching one off and running
 `06-prepare.sh` again removes it from the device tree (a commit "Remove: ...").

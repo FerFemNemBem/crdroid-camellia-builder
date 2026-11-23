@@ -18,8 +18,8 @@ Credits - this build would not exist without:
                     https://github.com/cristidclxvi
   * Sushrut1101   - (dm700-devs) chose the "gold" connectivity firmware in 2023
   * fieldmar      - ViLTE/VoLTE fix and restoring the "gold" connectivity firmware, which also
-                    fixes the Bluetooth headset microphone
-                    (patches/device/0001-*, 0002-*, originally pull requests #7 and #8)
+                    fixes the Bluetooth headset microphone, and the hotspot repeater mode
+                    (patches/device/0001-*, 0002-*, 0005-*; 0001/0002 originally pull requests #7 and #8)
                     https://github.com/fieldmar/android_device_xiaomi_camellia
   * MiCode        - (Xiaomi) the camellia kernel source drop
   * crDroid       - https://github.com/crdroidandroid
@@ -29,6 +29,6 @@ Credits - this build would not exist without:
   * MindTheGapps  - optional Google apps package
                     https://github.com/MindTheGapps
 
-patches/device/0001-* and 0002-* are authored by fieldmar; the other patches in this
+patches/device/0001-*, 0002-* and 0005-* are authored by fieldmar; the other patches in this
 repository are derived from the device tree, LineageOS or AOSP and are provided under
 the license of the project they apply to (Apache License 2.0).

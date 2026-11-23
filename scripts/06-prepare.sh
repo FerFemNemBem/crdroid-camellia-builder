@@ -31,7 +31,7 @@ for p in "$CCB_ROOT"/patches/device/*.patch; do
   n=$(basename "$p"); s=$(patch_subject "$p")
   # optional patches: applied or removed according to their switch in config.env
   opt=""
-  case $n in *ViPER*) opt=WITH_VIPER ;; *Widevine-L3*) opt=WIDEVINE_L3 ;; esac
+  case $n in *ViPER*) opt=WITH_VIPER ;; *Widevine-L3*) opt=WIDEVINE_L3 ;; *hotspot-share*) opt=HOTSPOT_REPEATER ;; esac
   if [ -n "$opt" ]; then
     if git -C "$DT" apply --reverse --check "$p" 2>/dev/null; then
       if is_true "${!opt}"; then log "already applied: $s"

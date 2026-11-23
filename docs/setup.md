@@ -133,6 +133,7 @@ All settings are explained in the file. The most important ones:
 | `WORK_DIR` | source tree, cache and keys (~300 GB, Linux file system) |
 | `OUTPUT_DIR` | finished builds, downloads, logs; on WSL a Windows drive is handy, e.g. `/mnt/d/crdroid` (= `D:\crdroid`, lower-case letter!) |
 | `WITH_VIPER` / `WITH_GAPPS` | ViPER4AndroidFX on/off (default on), download MindTheGapps on/off (default on) |
+| `HOTSPOT_REPEATER` | hotspot shares the Wi-Fi connection instead of switching Wi-Fi off (repeater, 2.4 GHz; default off) |
 | `WIDEVINE_L3` | Widevine L3 instead of L1 (default on: L1 cannot play DRM video with the current kernel; L3 plays in SD) |
 | `SIGNING` | `test` (default, nothing to manage) or `own` (recommended for daily use and OTA), see [signing.md](signing.md) - decide before the first installation |
 | `OTA_URL` / `OTA_UPLOAD` | only for your own update server, see [ota-server.md](ota-server.md) |

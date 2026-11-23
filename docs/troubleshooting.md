@@ -146,6 +146,12 @@ again - no rebuild needed. The phone is not affected, it asks the router itself.
 **OTA download on the phone is slow** - the updater of crDroid 12.14 and later downloads over several
 connections at once (setting in the updater); older updaters use one connection.
 
+**Hotspot repeater (`HOTSPOT_REPEATER=true`) is very slow, even with no device connected** - the
+phone is connected to your Wi-Fi on 5 GHz while the hotspot runs on 2.4 GHz. The chip has a single
+radio and has to switch between the two bands all the time (in my test: 30 -> 4 Mbit/s). Connect the
+phone to a **2.4 GHz** network instead (on many routers: give the 2.4 GHz band its own network name);
+then both run on the same channel and the repeater works at normal speed. Tested on my phone.
+
 **Updater finds nothing** - the installed build is the newest (expected), `os_sdk_level` is missing
 in the JSON (use `08-publish.sh`), the URL in the build differs from `OTA_URL` (build and install
 once more), or the phone cannot reach the server (open the JSON URL in the phone's browser).
