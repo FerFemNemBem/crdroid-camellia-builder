@@ -1,0 +1,188 @@
+From 27be24c9dc3b033dca8681315691a056adec2ba6 Mon Sep 17 00:00:00 2001
+From: Fieldmar <974888+fieldmar@users.noreply.github.com>
+Date: Mon, 23 Nov 2026 22:43:03 +0000
+Subject: [PATCH] camellia: patch the MTK Codec2 HAL's dequeueBuffer fence leak
+
+android.hardware.media.c2@1.2-mediatek leaks the release fence that
+dequeueBuffer hands it: one sync_file per displayed frame, never
+closed. At 30 fps it hits the 32768-fd limit after about 18 minutes of
+video, aborts ("Failed to clone native_handle in hidl_handle: Too many
+open files") and restarts, so the app's decoder dies with DEAD_OBJECT.
+In YouTube Shorts the picture jumps to the next clip while the captions
+stay.
+
+Add a frameworks/av patch that wraps the producer handed to the HAL in
+client.cpp so dequeueBuffer waits on the fence on the framework side
+and passes no fence to the HAL. Document it in patches/README.md.
+
+Verified 2026-11-22: HAL fd count stays flat at about 160 with no
+sync_file entries while Shorts play, and 20+ minutes of Shorts with no
+skip.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Change-Id: Ibd24b3cffc4ddb6b98d0231ab9e963d73d618cd1
+---
+ patches/README.md                           |   1 +
+ patches/codec2_mtk_dequeue_fence_leak.patch | 141 ++++++++++++++++++++
+ 2 files changed, 142 insertions(+)
+ create mode 100644 patches/codec2_mtk_dequeue_fence_leak.patch
+
+diff --git a/patches/README.md b/patches/README.md
+index bb71b3d..2222621 100644
+--- a/patches/README.md
++++ b/patches/README.md
+@@ -16,6 +16,7 @@ Kernel changes are not here — they are commits in
+ | `bluetooth_mtk_sniff_subrating.patch` | `packages/modules/Bluetooth` | The connsys controller advertises sniff-subrating support, then answers `HCI_Sniff_Subrating` (0x0811) with a Command Status event carrying `COMMAND_DISALLOWED` instead of the Command Complete the spec requires. AOSP asserts on the response *form* and aborts (`system/gd/hci/hci_layer.cc:278`), so `com.android.bluetooth` crash-loops and any audio link drops. Reproduced with AirPods Pro 3: crash within seconds of pressing play. Affects every sniff-subrating-capable headset, not one vendor. |
+ | `fmradio_rds_lp64_struct.patch` | `packages/apps/FMRadio` | RDS never appears, on every station, because the FM JNI can never read it. `COM_read_rds_data()` accepts the read only if it returns exactly `sizeof(RDSData_Struct)`, but `struct rds_group_cnt` in `jni/fmr/fm.h` declares its 33 counters `unsigned long` where the kernel's `struct rds_group_cnt_t` uses `unsigned int`. On LP64 that makes the userspace struct 824 bytes against the kernel's 688, so the length check fails every time and `readRds()` reports no events forever. Only the arm64 JNI is installed, so the app always hits it; on a 32-bit build the sizes coincide, which is why it survived upstream. Also widens `rds_raw_data.data` to 148 so the declaration matches `struct rds_raw_t`. That one is cosmetic, not a fix: tail padding makes both structs 156 bytes either way, and `FM_IOCTL_RDS_GET_LOG` is declared but never called. |
+ | `sensors_multihal_vendor_type.patch` | `hardware/interfaces` | Xiaomi's sensor stack emits vendor sensor type **75**, below `DEVICE_PRIVATE_BASE` (65536). Four places assert that anything unrecognised must be at or above that line, and `CHECK_GE` is `LOG(FATAL)`: `aidl/convert/convert.cpp:286` and `:493`, and `aidl/default/multihal/ConvertUtils.cpp:229` and `:411`. Each sits at the top of a `default:` arm whose body is a plain `memcpy` of the raw values, i.e. the code already handles an arbitrary type, so the assert guards nothing and only decides which process dies. `ConvertUtils.cpp` kills `android.hardware.sensors-service.xiaomi-multihal`, which init restarts into the same event, so every tombstone reads `Process uptime: 0s`. `convert.cpp:286` is worse: it runs inside **system_server**'s SensorService thread, so a single type-75 event aborts system_server and the whole UI restarts to the boot animation without the bootloader being involved. Observed 2026-08-21, with a `com.android.bluetooth` abort alongside it as collateral of the restart. Reported downstream as issue #1. |
++| `codec2_mtk_dequeue_fence_leak.patch` | `frameworks/av` | The MediaTek Codec2 HAL (`android.hardware.media.c2@1.2-mediatek`) leaks the release fence that `dequeueBuffer` hands it: one `sync_file` per displayed frame, never closed. At 30 fps it reaches the process's 32768-fd limit after about 18 minutes of video, then aborts (`HidlSupport: Failed to clone native_handle in hidl_handle: Too many open files`) and restarts, killing the app's decoder (`DEAD_OBJECT`). In YouTube Shorts this shows as the picture jumping to the next clip while the captions stay. The patch wraps the producer passed to the HAL in `client.cpp` so that `dequeueBuffer` waits on the fence on the framework side and gives the HAL no fence to leak. Verified 2026-11-22: HAL fd count flat at about 160 with no `sync_file` entries while Shorts play, and 20+ minutes of Shorts with no skip. |
+ 
+ ## Upstreaming status
+ 
+diff --git a/patches/codec2_mtk_dequeue_fence_leak.patch b/patches/codec2_mtk_dequeue_fence_leak.patch
+new file mode 100644
+index 0000000..02ddd68
+--- /dev/null
++++ b/patches/codec2_mtk_dequeue_fence_leak.patch
+@@ -0,0 +1,141 @@
++diff --git a/media/codec2/hal/client/Android.bp b/media/codec2/hal/client/Android.bp
++index 9796a5df56..1c914b150b 100644
++--- a/media/codec2/hal/client/Android.bp
+++++ b/media/codec2/hal/client/Android.bp
++@@ -41,6 +41,7 @@ cc_library {
++ 
++     shared_libs: [
++         "android.hardware.graphics.bufferqueue@1.0",
+++        "android.hardware.graphics.bufferqueue@2.0",
++         "android.hardware.media.bufferpool2-V2-ndk",
++         "android.hardware.media.bufferpool@2.0",
++         "android.hardware.media.c2-V1-ndk",
++diff --git a/media/codec2/hal/client/client.cpp b/media/codec2/hal/client/client.cpp
++index 22859ce2ff..052d12380d 100644
++--- a/media/codec2/hal/client/client.cpp
+++++ b/media/codec2/hal/client/client.cpp
++@@ -73,6 +73,7 @@
++ #include <cutils/native_handle.h>
++ #include <gui/bufferqueue/2.0/B2HGraphicBufferProducer.h>
++ #include <gui/bufferqueue/2.0/H2BGraphicBufferProducer.h>
+++#include <ui/Fence.h>
++ #include <hardware/gralloc.h> // for GRALLOC_USAGE_*
++ #include <hidl/HidlSupport.h>
++ #include <media/stagefright/foundation/ADebug.h> // for asString(status_t)
++@@ -123,6 +124,107 @@ using c2_hidl::utils::operator<<;
++ 
++ namespace /* unnamed */ {
++ 
+++// camellia: the MediaTek Codec2 HAL on this device is an Android 12 vendor
+++// blob that never closes the release fence it gets back from dequeueBuffer().
+++// The Android 16 display path returns a real release fence for every frame,
+++// so the HAL leaks one sync_file fd per frame until it reaches its open-file
+++// limit (32768, about 18 minutes of 30 fps video) and aborts, killing every
+++// decoder in use. Wait for the fence on this side instead and hand the HAL a
+++// buffer with no fence, so there is nothing for it to leak. If the fence does
+++// not signal in time, pass it through unchanged. Waits of 8 ms or more are
+++// logged so the cost can be checked.
+++class FenceWaitingB2HGraphicBufferProducer : public HGraphicBufferProducer2 {
+++    // Forwards to a plain B2HGraphicBufferProducer. Composition, not
+++    // inheritance: B2HGraphicBufferProducer holds an sp<Obituary> whose type
+++    // is private to libgui, so a subclass cannot be destroyed from here.
+++    using HStatus = ::android::hardware::graphics::bufferqueue::V2_0::Status;
+++    using HConnectionType = ::android::hardware::graphics::bufferqueue::V2_0::ConnectionType;
+++    using HProducerListener = ::android::hardware::graphics::bufferqueue::V2_0::IProducerListener;
+++    using HHardwareBuffer = ::android::hardware::graphics::common::V1_2::HardwareBuffer;
+++    using hidl_handle = ::android::hardware::hidl_handle;
+++
+++    sp<HGraphicBufferProducer2> mInner;
+++
+++public:
+++    explicit FenceWaitingB2HGraphicBufferProducer(sp<::android::IGraphicBufferProducer> const& base)
+++        : mInner(new B2HGraphicBufferProducer2(base)) {}
+++
+++    Return<void> dequeueBuffer(DequeueBufferInput const& input,
+++                               dequeueBuffer_cb _hidl_cb) override {
+++        return mInner->dequeueBuffer(
+++                input,
+++                [&_hidl_cb](HStatus status, int32_t slot, DequeueBufferOutput const& output) {
+++                    native_handle_t const* h = output.fence.getNativeHandle();
+++                    if (h && h->numFds == 1 && h->numInts == 0 && h->data[0] >= 0) {
+++                        sp<Fence> fence = new Fence(dup(h->data[0]));
+++                        nsecs_t start = systemTime();
+++                        status_t waited = fence->wait(1000);
+++                        nsecs_t ms = (systemTime() - start) / 1000000;
+++                        if (ms >= 8) {
+++                            ALOGD("dequeueBuffer: waited %lld ms for the release fence",
+++                                  (long long)ms);
+++                        }
+++                        if (waited == OK) {
+++                            DequeueBufferOutput noFence{};
+++                            noFence.bufferAge = output.bufferAge;
+++                            noFence.bufferNeedsReallocation = output.bufferNeedsReallocation;
+++                            noFence.releaseAllBuffers = output.releaseAllBuffers;
+++                            _hidl_cb(status, slot, noFence);
+++                            return;
+++                        }
+++                    }
+++                    _hidl_cb(status, slot, output);
+++                });
+++    }
+++
+++    Return<HStatus> setMaxDequeuedBufferCount(int32_t n) override {
+++        return mInner->setMaxDequeuedBufferCount(n);
+++    }
+++    Return<void> requestBuffer(int32_t slot, requestBuffer_cb cb) override {
+++        return mInner->requestBuffer(slot, cb);
+++    }
+++    Return<HStatus> setAsyncMode(bool async) override { return mInner->setAsyncMode(async); }
+++    Return<HStatus> detachBuffer(int32_t slot) override { return mInner->detachBuffer(slot); }
+++    Return<void> detachNextBuffer(detachNextBuffer_cb cb) override {
+++        return mInner->detachNextBuffer(cb);
+++    }
+++    Return<void> attachBuffer(HHardwareBuffer const& buffer, uint32_t generationNumber,
+++                              attachBuffer_cb cb) override {
+++        return mInner->attachBuffer(buffer, generationNumber, cb);
+++    }
+++    Return<void> queueBuffer(int32_t slot, QueueBufferInput const& input,
+++                             queueBuffer_cb cb) override {
+++        return mInner->queueBuffer(slot, input, cb);
+++    }
+++    Return<HStatus> cancelBuffer(int32_t slot, hidl_handle const& fence) override {
+++        return mInner->cancelBuffer(slot, fence);
+++    }
+++    Return<void> query(int32_t what, query_cb cb) override { return mInner->query(what, cb); }
+++    Return<void> connect(sp<HProducerListener> const& listener, HConnectionType api,
+++                         bool producerControlledByApp, connect_cb cb) override {
+++        return mInner->connect(listener, api, producerControlledByApp, cb);
+++    }
+++    Return<HStatus> disconnect(HConnectionType api) override { return mInner->disconnect(api); }
+++    Return<HStatus> allocateBuffers(uint32_t width, uint32_t height, uint32_t format,
+++                                    uint64_t usage) override {
+++        return mInner->allocateBuffers(width, height, format, usage);
+++    }
+++    Return<HStatus> allowAllocation(bool allow) override {
+++        return mInner->allowAllocation(allow);
+++    }
+++    Return<HStatus> setGenerationNumber(uint32_t generationNumber) override {
+++        return mInner->setGenerationNumber(generationNumber);
+++    }
+++    Return<HStatus> setDequeueTimeout(int64_t timeoutNs) override {
+++        return mInner->setDequeueTimeout(timeoutNs);
+++    }
+++    Return<uint64_t> getUniqueId() override { return mInner->getUniqueId(); }
+++    Return<void> getConsumerName(getConsumerName_cb cb) override {
+++        return mInner->getConsumerName(cb);
+++    }
+++};
+++
+++
++ // c2_status_t value that corresponds to hwbinder transaction failure.
++ constexpr c2_status_t C2_TRANSACTION_FAILED = C2_CORRUPTED;
++ 
++@@ -3632,7 +3734,7 @@ c2_status_t Codec2Client::Component::setOutputSurface(
++     sp<HGraphicBufferProducer2> igbp = surface ?
++             surface->getHalInterface<HGraphicBufferProducer2>() : nullHgbp;
++     if (surface && !igbp) {
++-        igbp = new B2HGraphicBufferProducer2(surface);
+++        igbp = new FenceWaitingB2HGraphicBufferProducer(surface);
++     }
++ 
++     std::scoped_lock lock(mOutputMutex);

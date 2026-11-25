@@ -17,7 +17,7 @@ Pipeline (each step is a script in `scripts/`, all idempotent):
 | download | `03-download.sh` | stock MIUI 14 Global recovery ZIP (MD5), optional MindTheGapps (SHA-256) | 10-30 min |
 | sync | `04-sync.sh [--known-good TAG]` | `repo init` crDroid 16.0, local manifest, `repo sync -c -d ...` in a retry loop, saves `repo manifest -r` to `$SRC/.ccb-source-state.xml` | 45 min - 3 h |
 | keys | `05-keys.sh` | own keys via `development/tools/make_key`, `keys.mk` incl. Bluetooth line, encrypted backup | minutes |
-| prepare | `06-prepare.sh` | A) device patches, B) 7 required patches (+replacements), C) gold firmware, D) `extract-files.py`, E) updater URL, F) signing check | 5-15 min |
+| prepare | `06-prepare.sh` | A) device patches, B) 8 required patches (+replacements), C) gold firmware, D) `extract-files.py`, E) updater URL, F) signing check | 5-15 min |
 | build | `07-build.sh` | `lunch lineage_camellia-bp4a-userdebug && m bacon`, copies ZIP/boot.img/state to `$BUILDS_DIR/<date-time>/` | 3-4 h first, 7-15 min later |
 | publish | `08-publish.sh [-n]` | JSON for the crDroid updater, rsync ZIP then JSON, verify over HTTP, keep `OTA_KEEP` | minutes |
 

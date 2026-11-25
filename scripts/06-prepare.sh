@@ -2,7 +2,7 @@
 # 06-prepare.sh - prepare the synced source tree for a camellia build:
 #   A) device tree patches (patches/device/: VoLTE fix, gold connectivity firmware list, ViPER,
 #      optional Widevine L3)
-#   B) the 7 required patches shipped in device/xiaomi/camellia/patches/
+#   B) the 8 required patches in device/xiaomi/camellia/patches/ (the 8th arrives with device patch 0006 by fieldmar)
 #      (a file with the same name in patches/crdroid-16.0/ replaces the device tree version)
 #   C) the 8 "gold" connectivity firmware files, checked against the SHA-1 in proprietary-files.txt
 #   D) proprietary vendor files extracted from the stock MIUI ROM
@@ -53,6 +53,7 @@ done
 log "--- B) required patches ---"
 declare -A TARGET=(
   [bluetooth_mtk_sniff_subrating]=packages/modules/Bluetooth
+  [codec2_mtk_dequeue_fence_leak]=frameworks/av
   [connectivity_android16_on_kernel414]=packages/modules/Connectivity
   [fmradio_rds_lp64_struct]=packages/apps/FMRadio
   [livedisplay_sysfs_se_value]=hardware/lineage/interfaces

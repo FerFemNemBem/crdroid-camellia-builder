@@ -11,7 +11,7 @@ kernel. This builder adds the parts needed to build all of that as crDroid.
 
 | project | why |
 |---|---|
-| `cristidclxvi/android_device_xiaomi_camellia` | device tree: partitions, HALs, SELinux, the list of proprietary files, the 7 required patches |
+| `cristidclxvi/android_device_xiaomi_camellia` | device tree: partitions, HALs, SELinux, the list of proprietary files, the 8 required patches |
 | `cristidclxvi/android_kernel_xiaomi_camellia` | kernel 4.14 with backports |
 | `cristidclxvi/android_kernel_modules_xiaomi_camellia` | Wi-Fi, Bluetooth and other drivers for that kernel |
 | `LineageOS/android_hardware_mediatek`, `_device_mediatek_sepolicy_vndr`, `_hardware_xiaomi` | shared MediaTek / Xiaomi code |
@@ -37,6 +37,7 @@ Applied by `scripts/06-prepare.sh`, idempotently (already applied ones are detec
 | `0003-camellia-include-ViPER4AndroidFX` | builds ViPER, registers its audio effect, SELinux `execmem` for the audio HAL; skipped with `WITH_VIPER=false` |
 | `0004-camellia-leave-out-liboemcrypto-Widevine-L3` | on by default (`WIDEVINE_L3=true`, switch off with `false`): leaves `liboemcrypto.so` out of the vendor files, so Widevine cannot reach the TEE and falls back to L3. DRM video apps then use the normal decoder instead of the broken secure one and play in SD |
 | `0005-camellia-let-the-hotspot-share-a-Wi-Fi-connection` | by fieldmar: optional (`HOTSPOT_REPEATER=true`): advertises one Wi-Fi chip mode with station + access point (`WIFI_HIDL_FEATURE_DUAL_INTERFACE`) so turning the hotspot on no longer turns Wi-Fi off - the phone shares its Wi-Fi connection (repeater). The chip is then powered through the driver-state path. Hotspot on 2.4 GHz only - connect the phone itself to a 2.4 GHz network too, otherwise the single radio keeps switching bands and the speed collapses |
+| `0006-camellia-patch-the-MTK-Codec2-HAL-dequeueBuffer-fence-leak` | by fieldmar: adds `codec2_mtk_dequeue_fence_leak.patch` to the device tree; `06-prepare.sh` applies it to `frameworks/av`. MediaTek's video decoder service leaks one file descriptor per displayed frame and crashes after about 18 minutes of video (YouTube Shorts jump to the next clip, players stop with `DEAD_OBJECT`). The patch waits on the buffer fence in the framework and hands the HAL none to leak |
 
 Optional patches follow their switch in both directions: switching one off and running
 `06-prepare.sh` again removes it from the device tree (a commit "Remove: ...").
