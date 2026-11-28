@@ -129,6 +129,11 @@ to free the space (about 1.3 GB). Installing it again would just rewrite the sam
 **GitHub answers `429 Too Many Requests`** - many syncs and API checks in a short time. Wait an hour
 and run the step again. The build itself does not depend on it: all patches are in this repository.
 
+**Apps or System UI crash ("device lost", crashes in `libgpu_aux.so`) after changing the GPU renderer**
+- do not force the renderer to **Vulkan** in *Developer options*. The closed MIUI 14 graphics drivers
+cannot handle Android's UI and video on Vulkan (found by fieldmar). Set it back to the default
+(OpenGL); this ROM never turns Vulkan on by itself.
+
 **ViPER app missing** - `WITH_VIPER=false`, or `packages/apps/ViPER4AndroidFX` was not synced
 (the build stops with an error in that case). Sync again.
 
